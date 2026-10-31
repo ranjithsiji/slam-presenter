@@ -6,7 +6,10 @@ WordPress plugin for scienceslam.in: presenter profiles, slam events (4 regional
 
 - [`slam-presenter-profiles/`](slam-presenter-profiles/): the WordPress plugin (zip this folder to install it).
 - [`slam-presenter-profiles/tools/`](slam-presenter-profiles/tools/): WP-CLI helpers and the photo face-centering script.
+- [`examples/sample-presenters.csv`](examples/sample-presenters.csv): a Google Form responses export in the format *Import / Export* expects (same column headers, made-up presenters).
 - [`examples/sample-timetable.txt`](examples/sample-timetable.txt): the timetable text format accepted by *Import from text* and *Add New Timetable → Paste timetable text* (sample names).
+
+The two examples belong together: import the CSV into a slam, then paste the sample timetable for it, and every talk matches a presenter.
 
 ## Editions
 

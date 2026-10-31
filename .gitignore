@@ -1,5 +1,6 @@
 # Google Form response exports: presenters' personal details and photo links.
 *.csv
+!examples/*.csv
 
 # Build and tool output
 *.zip
