@@ -48,3 +48,9 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 - Front-end labels (സംഗ്രഹം, അവതാരകരെക്കുറിച്ച്, മുഴുവൻ സമയക്രമം കാണുക, …) are editable in Settings.
 - The profile's schedule button links to `<schedule page>#ssp-talk-<id>`, which scrolls to and highlights that presenter's row.
 - Colours come from Astra's global colour variables when present (`--ast-global-color-*`), so they follow the live site's palette.
+
+## License
+
+Copyright (C) 2026 Ranjithsiji
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See [LICENSE](../LICENSE) for the full text.

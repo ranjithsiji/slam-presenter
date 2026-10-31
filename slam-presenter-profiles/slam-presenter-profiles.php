@@ -8,7 +8,8 @@
  * Requires PHP: 7.4
  * Author: Ranjithsiji
  * Author URI: https://alphafork.com
- * License: GPL v2 or later
+ * License: GPL v3 or later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: slam-presenter-profiles
  */
 
