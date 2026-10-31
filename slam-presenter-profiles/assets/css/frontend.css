@@ -1,0 +1,990 @@
+/* Science Slam presenter profiles. Colours follow the scienceslam.in Astra palette. */
+
+.ssp-profile,
+.ssp-grid,
+.ssp-timetable,
+.ssp-talks {
+	--ssp-accent: var(--ast-global-color-0, #FD9800);
+	--ssp-accent-dark: var(--ast-global-color-1, #E98C00);
+	--ssp-ink: var(--ast-global-color-2, #0F172A);
+	--ssp-text: var(--ast-global-color-3, #454F5E);
+	--ssp-cream: var(--ast-global-color-4, #FEF9E1);
+	--ssp-cream-2: var(--ast-global-color-6, #F9F0C8);
+	--ssp-tile: #FBFAF6;
+	--ssp-line: #ECE8DC;
+	--ssp-radius: 14px;
+	--ssp-head-font: "Anek Malayalam", "Plus Jakarta Sans", inherit;
+	color: var(--ssp-text);
+	line-height: 1.7;
+	box-sizing: border-box;
+}
+
+.ssp-profile *,
+.ssp-grid *,
+.ssp-timetable *,
+.ssp-talks * {
+	box-sizing: border-box;
+}
+
+.ssp-icon {
+	width: 1.25em;
+	height: 1.25em;
+	flex: none;
+	vertical-align: -0.2em;
+}
+
+/* Themes underline content links (Astra: ".ast-single-post .entry-content a"); these components style their own. */
+html body .ssp-profile a:not(.ssp-u),
+html body .ssp-grid a:not(.ssp-u),
+html body a.ssp-grid-card:not(.ssp-u),
+html body .ssp-timetable a:not(.ssp-u),
+html body .ssp-talks a:not(.ssp-u) {
+	text-decoration: none;
+}
+
+/* Theme title and featured image are shown inside the card instead. */
+body.ssp-hide-theme-title .entry-header .entry-title,
+body.ssp-hide-theme-title h1.entry-title,
+body.ssp-hide-theme-title .wp-block-post-title,
+body.ssp-hide-theme-title .wp-block-post-featured-image,
+body.ssp-hide-theme-title .entry-meta,
+body.ssp-hide-theme-title .wp-block-group:has(> .wp-block-post-date),
+body.ssp-hide-theme-title .wp-block-post-date,
+body.ssp-hide-theme-title .wp-block-post-author-name {
+	display: none;
+}
+
+/* Shown only to users who can edit the presenter. */
+html body .ssp-profile a.ssp-edit-link {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	padding: 0.3em 0.85em;
+	border-radius: 999px;
+	background: var(--ssp-ink);
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	line-height: 1.6;
+	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+}
+
+html body .ssp-profile a.ssp-edit-link:hover,
+html body .ssp-profile a.ssp-edit-link:focus-visible {
+	background: var(--ssp-accent-dark);
+	color: #fff;
+}
+
+.ssp-edit-link .ssp-icon {
+	width: 1em;
+	height: 1em;
+}
+
+/* Square photo frame: the img is positioned inside it (see SSP_Presenter::frame). */
+.ssp-frame {
+	position: relative;
+	display: block;
+	overflow: hidden;
+}
+
+.ssp-frame > .ssp-frame-img {
+	position: absolute;
+	display: block;
+	max-width: none !important;
+	margin: 0;
+	border-radius: 0;
+}
+
+.ssp-frame > .ssp-frame-img.is-cover {
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ---------- Profile card ---------- */
+
+.ssp-profile {
+	max-width: 1180px;
+	margin: 0 auto 3rem;
+}
+
+.ssp-profile-card {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(260px, 360px) 1fr;
+	border-radius: var(--ssp-radius);
+	overflow: hidden;
+	background: var(--ssp-tile);
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 12px 32px -12px rgba(15, 23, 42, 0.18);
+}
+
+.ssp-id {
+	display: flex;
+	flex-direction: column;
+	background: var(--ssp-ink);
+	color: #E7EAF0;
+}
+
+.ssp-id-photo {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	background: radial-gradient(circle at 30% 20%, var(--ssp-cream) 0, var(--ssp-cream-2) 60%, var(--ssp-accent) 160%);
+	overflow: hidden;
+}
+
+.ssp-id-photo .ssp-photo {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	max-width: none;
+}
+
+.ssp-photo-placeholder {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--ssp-head-font);
+	font-weight: 700;
+	color: var(--ssp-accent-dark);
+	background: linear-gradient(135deg, var(--ssp-cream), var(--ssp-cream-2));
+	letter-spacing: 0.04em;
+}
+
+.ssp-id-photo .ssp-photo-placeholder {
+	font-size: clamp(3rem, 8vw, 5.5rem);
+}
+
+/* Orange band where the photo meets the dark panel. */
+.ssp-id-photo::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 6px;
+	background: linear-gradient(90deg, var(--ssp-accent), var(--ssp-accent-dark));
+}
+
+.ssp-award {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	padding: 0.3em 0.8em;
+	border-radius: 999px;
+	background: var(--ssp-accent);
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 700;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ssp-id-panel {
+	padding: 1.75rem 1.75rem 2rem;
+	flex: 1;
+}
+
+.ssp-eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--ssp-accent);
+}
+
+.ssp-profile .ssp-name {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	font-size: clamp(1.6rem, 3vw, 2.1rem);
+	line-height: 1.25;
+	color: #fff;
+}
+
+.ssp-name-en {
+	margin: 0.2rem 0 0;
+	color: #AEB6C4;
+	font-size: 0.95rem;
+}
+
+.ssp-affil {
+	display: flex;
+	gap: 0.6rem;
+	margin: 1rem 0 0;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: #E7EAF0;
+}
+
+.ssp-affil .ssp-icon {
+	color: var(--ssp-accent);
+	margin-top: 0.1em;
+}
+
+.ssp-quote-block {
+	margin-top: 1.5rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.ssp-quote-label {
+	margin: 0 0 0.4rem;
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+.ssp-profile .ssp-quote {
+	position: relative;
+	margin: 0;
+	padding: 0 0 0 1.6rem;
+	border: 0;
+	background: none;
+	font-family: var(--ssp-head-font);
+	font-size: 1.1rem;
+	font-style: normal;
+	line-height: 1.55;
+	color: #fff;
+}
+
+.ssp-profile .ssp-quote::before {
+	content: "“";
+	position: absolute;
+	left: -0.1rem;
+	top: -0.55rem;
+	font-size: 3rem;
+	line-height: 1;
+	color: var(--ssp-accent);
+	font-family: Georgia, serif;
+}
+
+/* Tiles on the right, separated by hairlines like a spec sheet. */
+.ssp-tiles {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-content: start;
+}
+
+.ssp-tile {
+	padding: 1.6rem 1.9rem;
+	border-bottom: 1px solid var(--ssp-line);
+	min-width: 0;
+}
+
+.ssp-tile:nth-child(odd):not(.ssp-tile-wide) {
+	border-right: 1px solid var(--ssp-line);
+}
+
+.ssp-tile-wide,
+.ssp-tile-slam:only-child,
+.ssp-tile-slam:has(+ .ssp-tile-wide),
+.ssp-tile-links:first-child:has(+ .ssp-tile-wide) {
+	grid-column: 1 / -1;
+	border-right: 0 !important;
+}
+
+.ssp-tile:last-child {
+	border-bottom: 0;
+}
+
+.ssp-profile .ssp-tile-title {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	margin: 0 0 1rem;
+	font-family: var(--ssp-head-font);
+	font-size: 1.15rem;
+	line-height: 1.3;
+	color: var(--ssp-ink);
+}
+
+.ssp-tile-title .ssp-icon {
+	width: 1.5em;
+	height: 1.5em;
+	padding: 0.25em;
+	border-radius: 8px;
+	color: var(--ssp-accent-dark);
+	background: var(--ssp-cream);
+}
+
+.ssp-facts {
+	margin: 0 0 1rem;
+	display: grid;
+	gap: 0.5rem;
+}
+
+.ssp-facts:last-child {
+	margin-bottom: 0;
+}
+
+.ssp-facts > div {
+	display: flex;
+	gap: 0.7rem;
+	align-items: flex-start;
+}
+
+.ssp-facts dt {
+	margin: 0;
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-facts dd {
+	margin: 0;
+	line-height: 1.5;
+}
+
+.ssp-facts strong {
+	color: var(--ssp-ink);
+}
+
+html body .ssp-profile a.ssp-slam-link {
+	color: inherit;
+	text-decoration: underline;
+	text-decoration-color: var(--ssp-accent);
+	text-underline-offset: 3px;
+}
+
+html body .ssp-profile a.ssp-slam-link:hover strong {
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-chip {
+	display: inline-block;
+	margin-left: 0.3rem;
+	padding: 0 0.5em;
+	border-radius: 999px;
+	background: var(--ssp-cream-2);
+	color: var(--ssp-ink);
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.ssp-schedule-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	margin-top: 0.25rem;
+	padding: 0.45em 1em;
+	border-radius: 999px;
+	background: var(--ssp-accent);
+	color: #fff !important;
+	font-weight: 600;
+	font-size: 0.95rem;
+	transition: background 0.15s;
+}
+
+.ssp-schedule-link:hover,
+.ssp-schedule-link:focus-visible {
+	background: var(--ssp-accent-dark);
+}
+
+.ssp-schedule-link .ssp-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.ssp-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ssp-links a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	padding: 0.35em 0.85em;
+	border: 1px solid var(--ssp-line);
+	border-radius: 999px;
+	background: #fff;
+	color: var(--ssp-ink);
+	font-size: 0.9rem;
+	text-decoration: none;
+	transition: border-color 0.15s, transform 0.15s;
+}
+
+.ssp-links a:hover,
+.ssp-links a:focus-visible {
+	border-color: var(--ssp-brand);
+	transform: translateY(-1px);
+}
+
+.ssp-link-dot {
+	width: 0.6em;
+	height: 0.6em;
+	border-radius: 50%;
+	background: var(--ssp-brand);
+}
+
+.ssp-links .ssp-icon {
+	color: var(--ssp-brand);
+}
+
+.ssp-profile .ssp-talk-title {
+	margin: 0 0 0.6rem;
+	font-family: var(--ssp-head-font);
+	font-size: 1.3rem;
+	line-height: 1.4;
+	color: var(--ssp-ink);
+}
+
+.ssp-summary,
+.ssp-abstract,
+.ssp-bio {
+	font-size: 1.05rem;
+}
+
+.ssp-summary p {
+	font-size: 1.1rem;
+}
+
+.ssp-abstract {
+	margin-top: 1rem;
+	padding-top: 1rem;
+	border-top: 1px dashed var(--ssp-line);
+}
+
+.ssp-summary p:last-child,
+.ssp-abstract p:last-child,
+.ssp-bio p:last-child {
+	margin-bottom: 0;
+}
+
+.ssp-papers {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: paper;
+}
+
+.ssp-papers li {
+	position: relative;
+	padding: 0.7rem 0 0.7rem 2.4rem;
+	border-top: 1px solid var(--ssp-line);
+	counter-increment: paper;
+}
+
+.ssp-papers li:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.ssp-papers li::before {
+	content: counter(paper);
+	position: absolute;
+	left: 0;
+	top: 0.75rem;
+	width: 1.7rem;
+	height: 1.7rem;
+	border-radius: 50%;
+	background: var(--ssp-cream);
+	color: var(--ssp-accent-dark);
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-align: center;
+	line-height: 1.7rem;
+}
+
+.ssp-papers li:first-child::before {
+	top: 0.05rem;
+}
+
+.ssp-paper-title {
+	display: block;
+	color: var(--ssp-ink);
+	font-weight: 600;
+	line-height: 1.45;
+	text-decoration: none;
+}
+
+a.ssp-paper-title:hover {
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-paper-title .ssp-icon {
+	width: 0.9em;
+	height: 0.9em;
+	margin-left: 0.25em;
+	color: var(--ssp-accent);
+}
+
+.ssp-paper-meta {
+	font-size: 0.875rem;
+}
+
+.ssp-video iframe {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border-radius: 10px;
+}
+
+/* ---------- Talks list ---------- */
+
+.ssp-talks {
+	margin-top: 2.5rem;
+}
+
+.ssp-section-title {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	font-family: var(--ssp-head-font);
+	font-size: 1.35rem;
+	color: var(--ssp-ink);
+}
+
+.ssp-section-title .ssp-icon {
+	color: var(--ssp-accent);
+}
+
+.ssp-count {
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--ssp-text);
+}
+
+.ssp-talks-table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 0;
+}
+
+.ssp-talks-table th {
+	padding: 0.6rem 0.75rem;
+	border: 0;
+	border-bottom: 2px solid var(--ssp-accent);
+	color: var(--ssp-ink);
+	font-size: 0.95rem;
+	text-align: left;
+	background: none;
+}
+
+.ssp-talks-table td {
+	padding: 0.6rem 0.75rem;
+	font-size: 1.02rem;
+	border: 0;
+	border-bottom: 1px solid var(--ssp-line);
+	vertical-align: middle;
+}
+
+.ssp-talks-table td:first-child {
+	width: 3rem;
+	font-weight: 700;
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-talks-table a {
+	color: var(--ssp-ink);
+	text-decoration: none;
+}
+
+.ssp-talks-table a:hover {
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-talks-table tr.is-current td {
+	background: var(--ssp-cream);
+}
+
+.ssp-talks-who a {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	white-space: nowrap;
+}
+
+.ssp-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex: none;
+	box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--ssp-cream-2);
+}
+
+.ssp-avatar.ssp-photo-placeholder {
+	font-size: 0.85rem;
+}
+
+/* ---------- Presenter grid ---------- */
+
+.ssp-grid {
+	display: grid;
+	grid-template-columns: repeat(var(--ssp-cols, 4), minmax(0, 1fr));
+	gap: 1.5rem;
+}
+
+.ssp-grid-card {
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--ssp-radius);
+	overflow: hidden;
+	background: var(--ssp-tile);
+	color: var(--ssp-text);
+	text-decoration: none;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ssp-grid-card:hover,
+.ssp-grid-card:focus-visible {
+	transform: translateY(-3px);
+	box-shadow: 0 14px 28px -12px rgba(15, 23, 42, 0.3);
+}
+
+.ssp-grid-photo {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	border-bottom: 4px solid var(--ssp-accent);
+}
+
+.ssp-grid-photo .ssp-photo {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s;
+	font-size: 2.5rem;
+}
+
+.ssp-grid-photo .ssp-frame {
+	transition: transform 0.4s;
+}
+
+.ssp-grid-card:hover .ssp-grid-photo .ssp-frame {
+	transform: scale(1.04);
+}
+
+.ssp-grid-name {
+	padding: 0.9rem 1rem 0;
+	font-family: var(--ssp-head-font);
+	font-weight: 700;
+	font-size: 1.05rem;
+	line-height: 1.35;
+	color: var(--ssp-ink);
+}
+
+.ssp-grid-inst {
+	padding: 0.15rem 1rem 0;
+	font-size: 0.8rem;
+	line-height: 1.4;
+}
+
+.ssp-grid-talk {
+	margin-top: auto;
+	padding: 0.75rem 1rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.45;
+	color: var(--ssp-ink);
+}
+
+.ssp-grid-talk::before {
+	content: "";
+	display: block;
+	width: 2rem;
+	height: 2px;
+	margin-bottom: 0.5rem;
+	background: var(--ssp-accent);
+}
+
+/* ---------- Timetable ---------- */
+
+.ssp-timetable {
+	max-width: 960px;
+	margin: 0 auto 2rem;
+}
+
+.ssp-tt-head h2 {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	color: var(--ssp-ink);
+}
+
+.ssp-tt-where {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 1.2rem;
+	margin: 0.4rem 0 1.5rem;
+}
+
+.ssp-tt-where span {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.ssp-tt-where .ssp-icon {
+	color: var(--ssp-accent);
+}
+
+html body .ssp-timetable a.ssp-tt-where-link {
+	color: inherit;
+}
+
+html body .ssp-timetable a.ssp-tt-where-link:hover span {
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-tt-where-more {
+	font-weight: 600;
+	color: var(--ssp-accent-dark);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.ssp-tt {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ssp-tt > li {
+	display: grid;
+	grid-template-columns: 6.5rem 1fr auto;
+	gap: 1rem;
+	align-items: center;
+	padding: 0.7rem 0.9rem;
+	border-bottom: 1px solid var(--ssp-line);
+}
+
+.ssp-tt > li.ssp-tt-session {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.25rem 1rem;
+	margin-top: 1.75rem;
+	padding: 0.9rem 1.1rem;
+	border: 0;
+	border-radius: 10px;
+	background: var(--ssp-ink);
+	color: #fff;
+}
+
+.ssp-tt > li.ssp-tt-session:first-child {
+	margin-top: 0;
+}
+
+.ssp-tt-session h3 {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	font-size: 1.1rem;
+	color: #fff;
+}
+
+.ssp-tt-range {
+	color: var(--ssp-accent);
+	font-weight: 700;
+	font-size: 0.9rem;
+	white-space: nowrap;
+}
+
+.ssp-tt-note {
+	flex-basis: 100%;
+	margin: 0;
+	font-size: 0.85rem;
+	color: #C8CEDA;
+}
+
+.ssp-tt-time {
+	display: flex;
+	flex-direction: column;
+	font-weight: 700;
+	font-size: 0.9rem;
+	color: var(--ssp-ink);
+	font-variant-numeric: tabular-nums;
+	line-height: 1.3;
+}
+
+.ssp-tt-time small {
+	font-weight: 400;
+	font-size: 0.75rem;
+	color: var(--ssp-text);
+}
+
+.ssp-tt-body {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+	min-width: 0;
+	color: inherit;
+	text-decoration: none;
+}
+
+a.ssp-tt-body:hover .ssp-tt-title {
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-tt-title {
+	display: block;
+	color: var(--ssp-ink);
+	line-height: 1.4;
+}
+
+.ssp-tt-who {
+	display: block;
+	font-size: 0.85rem;
+	line-height: 1.4;
+}
+
+.ssp-tt-no {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: var(--ssp-accent-dark);
+}
+
+.ssp-tt > li.ssp-tt-talk {
+	scroll-margin-top: 120px;
+}
+
+.ssp-tt > li.ssp-tt-talk:target {
+	background: var(--ssp-cream-2);
+	border-radius: 8px;
+	box-shadow: inset 4px 0 0 var(--ssp-accent);
+}
+
+.ssp-tt > li.ssp-tt-break {
+	background: var(--ssp-cream);
+	border-bottom-color: transparent;
+	border-radius: 8px;
+	margin: 0.35rem 0;
+}
+
+.ssp-tt > li.ssp-tt-item .ssp-tt-body {
+	color: var(--ssp-ink);
+}
+
+/* Unpublished timetables */
+.ssp-tt-soon {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 1rem 1.25rem;
+	border-radius: 10px;
+	background: var(--ssp-cream);
+	color: var(--ssp-ink);
+	font-weight: 600;
+}
+
+.ssp-tt-soon .ssp-icon {
+	color: var(--ssp-accent);
+}
+
+.ssp-tt-draft-note {
+	margin: 0 0 1rem;
+	padding: 0.6rem 1rem;
+	border: 2px dashed #b32d2e;
+	border-radius: 8px;
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+.ssp-draft-chip {
+	display: inline-block;
+	padding: 0 0.5em;
+	border-radius: 999px;
+	background: #b32d2e;
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+	.ssp-profile-card {
+		grid-template-columns: 1fr;
+	}
+
+	.ssp-id {
+		display: grid;
+		grid-template-columns: minmax(0, 300px) 1fr;
+	}
+
+	.ssp-grid {
+		grid-template-columns: repeat(min(var(--ssp-cols, 4), 3), minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.ssp-id {
+		display: flex;
+	}
+
+	.ssp-tiles {
+		grid-template-columns: 1fr;
+	}
+
+	.ssp-tile {
+		grid-column: 1 / -1;
+		border-right: 0 !important;
+		padding: 1.3rem 1.25rem;
+	}
+
+	.ssp-id-panel {
+		padding: 1.4rem 1.25rem 1.6rem;
+	}
+
+	.ssp-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.9rem;
+	}
+
+	.ssp-tt > li {
+		grid-template-columns: 4.6rem 1fr;
+		gap: 0.7rem;
+		padding: 0.65rem 0.4rem;
+	}
+
+	.ssp-tt-no {
+		display: none;
+	}
+
+	.ssp-talks-table th:first-child,
+	.ssp-talks-table td:first-child {
+		display: none;
+	}
+
+	.ssp-talks-table {
+		table-layout: fixed;
+	}
+
+	.ssp-talks-table th:last-child,
+	.ssp-talks-table td:last-child {
+		width: 42%;
+	}
+
+	.ssp-talks-who a {
+		white-space: normal;
+		overflow-wrap: anywhere;
+	}
+
+	.ssp-talks-who .ssp-avatar {
+		width: 32px;
+		height: 32px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ssp-grid-card,
+	.ssp-grid-photo .ssp-frame,
+	.ssp-links a {
+		transition: none;
+	}
+}
