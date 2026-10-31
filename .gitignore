@@ -1,0 +1,7 @@
+# Google Form response exports: presenters' personal details and photo links.
+*.csv
+
+# Build and tool output
+*.zip
+__pycache__/
+*.pyc
