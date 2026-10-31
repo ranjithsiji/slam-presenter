@@ -5,3 +5,6 @@
 *.zip
 __pycache__/
 *.pyc
+
+# Real timetables (see examples/sample-timetable.txt for the format)
+timetable-*.txt

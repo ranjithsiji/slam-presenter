@@ -2,6 +2,12 @@
 
 WordPress plugin for scienceslam.in: presenter profiles, slam events (4 regional centres + the final) and timetables.
 
+## Repository layout
+
+- [`slam-presenter-profiles/`](slam-presenter-profiles/): the WordPress plugin (zip this folder to install it).
+- [`slam-presenter-profiles/tools/`](slam-presenter-profiles/tools/): WP-CLI helpers and the photo face-centering script.
+- [`examples/sample-timetable.txt`](examples/sample-timetable.txt): the timetable text format accepted by *Import from text* and *Add New Timetable → Paste timetable text* (sample names).
+
 ## Editions
 
 Slams belong to an **edition**: one year's set of regional slams and the final, eg. *Kerala Science Slam 2026*. *Science Slam → Editions* lists every edition (slams, presenters, dates). Add a new edition there and click it to set it up: number of regional slams with name, date, venue, city and talk slots, and the final. Saving creates those slams as drafts with empty timetables.
@@ -15,7 +21,7 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 3. **Photos**: save each slam's Drive photo folder in its event details (*Google Drive photo folder*) and share it as *Anyone with the link → Viewer*. On *Photos*, choose the slam, then *Fetch missing photos* (only that slam's presenters). A presenter's Drive link can be added or corrected on their card (*Edit link → Save & fetch*), eg. for new people in the final. If sharing is not possible, download the folder from Drive as a ZIP and upload it on the same page. Files are matched by the presenter name in the file name.
 4. **Edit a presenter** (Presenter Table → name, or the *Edit profile* button on the profile page when logged in): bio, designation, social links (incl. Wikidata), papers, video, award.
 5. **Crop photos**: in the *Photo & crop* box, or *Photos → Adjust* for quick passes over many presenters. Drag to move, scroll or use the slider to zoom; the square is exactly what the website shows. The original upload is never changed (the crop is stored as a face point + zoom), and a newly fetched photo starts from the default crop.
-   For a first pass on many photos, `tools/face-center.py` detects faces and sets the crop automatically (see the script header); crops already adjusted by hand are kept.
+   For a first pass on many photos, [`slam-presenter-profiles/tools/face-center.py`](slam-presenter-profiles/tools/face-center.py) detects faces and sets the crop automatically (see the script header); crops already adjusted by hand are kept.
 6. **Timetable**: the screen lists every timetable (type, date, slots filled, day) with *Edit timetable* / *View*. Open one, then either *Auto-generate*, paste the circulated timetable text into *Import from text*, or build by hand (drag rows, click presenters in "Not yet scheduled"). Times recalculate from the durations; set a *fixed start* on a row to force a time (eg. after lunch). To change who is in a slot, click the presenter name: the picker searches names, institutions and titles, and shows *Unscheduled*, *This event* or *All presenters*. Choosing someone who already has a slot swaps the two. Save.
 7. Put the shortcodes on the event page.
 
@@ -53,4 +59,4 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 
 Copyright (C) 2026 Ranjithsiji
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See [LICENSE](../LICENSE) for the full text.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See [LICENSE](LICENSE) for the full text.
