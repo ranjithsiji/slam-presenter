@@ -6,6 +6,7 @@ WordPress plugin for scienceslam.in: presenter profiles, slam events (4 regional
 
 - [`slam-presenter-profiles/`](slam-presenter-profiles/): the WordPress plugin (zip this folder to install it).
 - [`slam-presenter-profiles/tools/`](slam-presenter-profiles/tools/): WP-CLI helpers and the photo face-centering script.
+- [`slam-photo-frame/`](slam-photo-frame/): a separate plugin for "ഞാനും പങ്കെടുക്കുന്നു" campaign photo frames (see [Photo frames](#photo-frames)).
 - [`examples/sample-presenters.csv`](examples/sample-presenters.csv): a Google Form responses export in the format *Import / Export* expects (same column headers, made-up presenters).
 - [`examples/sample-timetable.txt`](examples/sample-timetable.txt): the timetable text format accepted by *Import from text* and *Add New Timetable → Paste timetable text* (sample names).
 
@@ -57,6 +58,22 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 - Front-end labels (സംഗ്രഹം, അവതാരകരെക്കുറിച്ച്, മുഴുവൻ സമയക്രമം കാണുക, …) are editable in Settings.
 - The profile's schedule button links to `<schedule page>#ssp-talk-<id>`, which scrolls to and highlights that presenter's row.
 - Colours come from Astra's global colour variables when present (`--ast-global-color-*`), so they follow the live site's palette.
+
+## Photo frames
+
+The **Science Slam Photo Frame** plugin ([`slam-photo-frame/`](slam-photo-frame/), installed separately) makes participation pictures: visitors take a photo or pick one from the gallery, fit it into the campaign frame and share the result.
+
+1. **Photo Frames → Add New**: title, intro text (shown above the maker), and in the *Frame* box the frame image: a PNG with a transparent window where the photo shows through (eg. 1200 × 1200). The box reports the window it found. Add the *Share text* (hashtags etc.; the page link is appended) and a download file name.
+2. Publish. The maker is on the frame's own page, `/frame/<slug>/` (base configurable in *Photo Frames → Settings*), or anywhere with `[photo_frame id="123"]` (`slug="participate"` also works; without either, the latest frame).
+
+On the page: *Take a photo* opens the phone camera (on computers a live camera window, which needs HTTPS), *Choose from gallery* picks a file. Drag to move, pinch / scroll / slider to zoom, rotate, flip. *Done* merges photo and frame into one JPEG the size of the frame.
+
+Sharing:
+- **Share picture** (phones): the system share sheet with the image, so it goes straight to WhatsApp (chat or Status), Instagram (post or story), Facebook, Telegram, etc. Shown only where the browser can share files.
+- **Instagram / WhatsApp Status / Facebook** buttons: the same share sheet; on computers they download the picture with a note to upload it in that app (these apps accept pictures only from the app itself).
+- **Invite friends**: WhatsApp, Facebook, Telegram, LinkedIn, X, Pinterest, email links and *Copy link* for the frame page. The page has Open Graph tags (skipped when Yoast, Rank Math or AIOSEO is active; the frame is also set as the featured image), so the link previews with the frame.
+
+Photos are never uploaded: everything happens in the browser. The only request is a counter of downloads/shares (`POST /wp-json/spf/v1/frames/<id>/use`), shown in the frames list and the *Usage* box. All button labels are editable in Settings.
 
 ## License
 
