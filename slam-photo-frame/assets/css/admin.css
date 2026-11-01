@@ -1,0 +1,32 @@
+.spf-admin-frame {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+.spf-admin-preview {
+	flex: 0 0 240px;
+	min-height: 240px;
+	border: 1px solid #dcdcde;
+	/* Checkerboard, so the transparent window is visible. */
+	background: #fff repeating-conic-gradient(#e5e5e5 0% 25%, #fff 0% 50%) 0 0 / 20px 20px;
+}
+
+.spf-admin-preview img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.spf-admin-fields {
+	flex: 1 1 320px;
+}
+
+.spf-admin-fields > p:first-of-type {
+	margin-top: 0;
+}
+
+.spf-image-note.is-warning {
+	color: #b32d2e;
+}
