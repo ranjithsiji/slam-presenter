@@ -1,4 +1,4 @@
-/* Frame edit screen: choose the frame image from the media library and check it has a transparent window. */
+/* Photo Frames edit screen: choose the frame image from the media library and check it has a transparent window. */
 (function ($) {
 	'use strict';
 
@@ -8,6 +8,7 @@
 	var $img = $box.find('.spf-admin-preview img');
 	var $note = $box.find('.spf-image-note');
 	var $remove = $box.find('.spf-remove-image');
+	var $placeholder = $box.find('.spf-admin-placeholder');
 	var media;
 
 	function setNote(text, warning) {
@@ -69,6 +70,7 @@
 				var att = media.state().get('selection').first().toJSON();
 				$id.val(att.id);
 				$img.attr('src', att.url).prop('hidden', false);
+				$placeholder.prop('hidden', true);
 				$remove.prop('hidden', false);
 				check(att.url, att.mime);
 			});
@@ -80,8 +82,34 @@
 		e.preventDefault();
 		$id.val('');
 		$img.attr('src', '').prop('hidden', true);
+		$placeholder.prop('hidden', false);
 		$remove.prop('hidden', true);
 		setNote('');
+	});
+
+	// Shortcode Copy buttons (list and edit screen). The Clipboard API needs HTTPS, so fall back to execCommand.
+	$(document).on('click', '.spf-copy', function () {
+		var $btn = $(this);
+		var text = $btn.data('copy');
+		var label = $btn.text();
+		var done = function () {
+			$btn.text(l.copied);
+			setTimeout(function () {
+				$btn.text(label);
+			}, 1500);
+		};
+		if (navigator.clipboard && window.isSecureContext) {
+			navigator.clipboard.writeText(text).then(done);
+			return;
+		}
+		var $tmp = $('<textarea readonly>').val(text).css({ position: 'fixed', top: 0, opacity: 0 }).appendTo('body');
+		$tmp[0].select();
+		try {
+			if (document.execCommand('copy')) {
+				done();
+			}
+		} catch (e) {}
+		$tmp.remove();
 	});
 
 	if ($img.attr('src')) {

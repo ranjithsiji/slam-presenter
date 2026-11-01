@@ -63,15 +63,26 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 
 The **Science Slam Photo Frame** plugin ([`slam-photo-frame/`](slam-photo-frame/), installed separately) makes participation pictures: visitors take a photo or pick one from the gallery, fit it into the campaign frame and share the result.
 
-1. **Photo Frames → Add New**: title, intro text (shown above the maker), and in the *Frame* box the frame image: a PNG with a transparent window where the photo shows through (eg. 1200 × 1200). The box reports the window it found. Add the *Share text* (hashtags etc.; the page link is appended) and a download file name.
-2. Publish. The maker is on the frame's own page, `/frame/<slug>/` (base configurable in *Photo Frames → Settings*), or anywhere with `[photo_frame id="123"]` (`slug="participate"` also works; without either, the latest frame).
+1. **Photo Frames → Add New**: the title of the event or campaign and the frame image: a PNG with a transparent window where the photo shows through (eg. 1200 × 1200). The form reports the window it found. Optionally an intro text (shown above the maker), the *Share text* (hashtags etc.; the page link is appended), the page address and the download file name. A frame without an image is saved as a draft.
+2. **Photo Frames** lists every frame with its status, page, shortcode (with a *Copy* button) and the number of pictures made.
+3. Show it to the public: the frame's own page, `/frame/<slug>/` (base configurable in *Photo Frames → Settings*), or any page or post with the shortcode:
 
-On the page: *Take a photo* opens the phone camera (on computers a live camera window, which needs HTTPS), *Choose from gallery* picks a file. Drag to move, pinch / scroll / slider to zoom, rotate, flip. *Done* merges photo and frame into one JPEG the size of the frame.
+| Shortcode | Output |
+| --- | --- |
+| `[photo_frame id="123"]` | The frame maker for that frame. |
+| `[photo_frame slug="participate"]` | The same, by the frame's page address. |
+| `[photo_frame]` | The latest published frame. |
+| `[photo_frame id="123" info="no"]` | Without the title and intro (for a page that has its own). |
+
+Draft frames show only to logged-in editors, so a frame can be tried on a page before publishing it.
+
+On the page: the frame with *Choose your photo*, and the title, the number of pictures made (*supporters*) and the intro text (beside the frame on wide screens, above it on phones). *Choose your photo* offers *Camera* (the phone camera; on computers a live camera window, which needs HTTPS) or *Gallery*. The photo then opens in the editor (full screen on phones, a window on computers): drag to move, pinch / scroll / slider / zoom buttons to zoom, rotate left or right, flip, and *Blur background* (a blurred copy of the photo fills whatever the photo does not cover). While dragging, the frame fades and a grid shows so the whole photo is visible. *Done* merges photo and frame into one JPEG the size of the frame. No watermark is added.
 
 Sharing:
-- **Share picture** (phones): the system share sheet with the image, so it goes straight to WhatsApp (chat or Status), Instagram (post or story), Facebook, Telegram, etc. Shown only where the browser can share files.
-- **Instagram / WhatsApp Status / Facebook** buttons: the same share sheet; on computers they download the picture with a note to upload it in that app (these apps accept pictures only from the app itself).
-- **Invite friends**: WhatsApp, Facebook, Telegram, LinkedIn, X, Pinterest, email links and *Copy link* for the frame page. The page has Open Graph tags (skipped when Yoast, Rank Math or AIOSEO is active; the frame is also set as the featured image), so the link previews with the frame.
+- **Share picture**: the browser's own share menu with the picture alone, so it reaches WhatsApp (chat or Status), Instagram (post or story), Facebook, Telegram and every other installed app; these apps can drop the image when text comes with it. The caption (share text and page link) is copied to the clipboard at the same time, to paste in the post. Browsers offer the menu only on HTTPS pages, and the button shows only where files can be shared.
+- **Download**: saves the picture, named with a random number so several do not overwrite each other. It is the main button where *Share picture* is not available.
+- **Caption**: the share text and link in a box with *Copy caption*.
+- **Invite friends**: WhatsApp, Facebook, Telegram, LinkedIn, X, Pinterest, email links, *More apps* (the share menu) and *Copy link* for the frame page. The page has Open Graph tags (skipped when Yoast, Rank Math or AIOSEO is active; the frame is also set as the featured image), so the link previews with the frame.
 
 Photos are never uploaded: everything happens in the browser. The only request is a counter of downloads/shares (`POST /wp-json/spf/v1/frames/<id>/use`), shown in the frames list and the *Usage* box. All button labels are editable in Settings.
 

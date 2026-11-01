@@ -3,7 +3,7 @@
  * Plugin Name: Science Slam Photo Frame
  * Plugin URI: https://scienceslam.in
  * Description: Campaign photo frames ("I'm participating"). Visitors take a selfie or pick a photo, fit it into the frame and share it on WhatsApp, Instagram, Facebook and more. Photos are processed in the browser and never uploaded.
- * Version: 1.0.0
+ * Version: 1.4.1
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Ranjithsiji
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access.
 }
 
-define( 'SPF_VERSION', '1.0.0' );
+define( 'SPF_VERSION', '1.4.1' );
 define( 'SPF_PLUGIN_FILE', __FILE__ );
 define( 'SPF_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SPF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -25,6 +25,7 @@ define( 'SPF_POST_TYPE', 'spf_frame' );
 
 require_once SPF_PLUGIN_DIR . 'includes/class-spf-settings.php';
 require_once SPF_PLUGIN_DIR . 'includes/class-spf-frames.php';
+require_once SPF_PLUGIN_DIR . 'includes/class-spf-admin.php';
 require_once SPF_PLUGIN_DIR . 'includes/class-spf-frontend.php';
 
 register_activation_hook( __FILE__, 'spf_activate' );
@@ -38,6 +39,7 @@ function spf_activate() {
 function spf_init_plugin() {
 	SPF_Settings::init();
 	SPF_Frames::init();
+	SPF_Admin::init();
 	SPF_Frontend::init();
 }
 add_action( 'plugins_loaded', 'spf_init_plugin' );

@@ -12,7 +12,7 @@ class SPF_Settings {
 
 	public static function init() {
 		add_action( 'admin_init', array( __CLASS__, 'register' ) );
-		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
+		add_action( 'admin_menu', array( __CLASS__, 'menu' ), 20 ); // After the Photo Frames menu.
 		add_action( 'update_option_' . self::OPTION, array( __CLASS__, 'maybe_flush' ), 10, 2 );
 		add_action( 'init', array( __CLASS__, 'flush_if_needed' ), 20 );
 	}
@@ -20,23 +20,34 @@ class SPF_Settings {
 	public static function defaults() {
 		return array(
 			'frame_slug'     => 'frame',
-			'label_take'     => 'Take a photo',
-			'label_choose'   => 'Choose from gallery',
+			'label_count'    => '%s supporters',
+			'label_start'    => 'Choose your photo',
+			'label_take'     => 'Camera',
+			'label_choose'   => 'Gallery',
 			'label_change'   => 'Change photo',
 			'label_hint'     => 'Drag to move. Pinch, scroll or use the slider to zoom.',
 			'label_zoom'     => 'Zoom',
-			'label_rotate'   => 'Rotate',
+			'label_zoom_in'  => 'Zoom in',
+			'label_zoom_out' => 'Zoom out',
+			'label_rotate_l' => 'Rotate left',
+			'label_rotate'   => 'Rotate right',
 			'label_flip'     => 'Flip',
+			'label_blur'     => 'Blur background',
 			'label_reset'    => 'Reset',
+			'label_close'    => 'Close',
 			'label_done'     => 'Done',
 			'label_edit'     => 'Edit again',
 			'label_share'    => 'Share picture',
 			'label_download' => 'Download',
-			'label_post'     => 'Post your picture',
+			'label_post'     => 'Share your picture',
+			'label_caption'  => 'Caption for your post',
+			'label_copy_cap' => 'Copy caption',
+			'label_caption_copied' => 'Caption copied. Paste it in your post.',
 			'label_invite'   => 'Invite friends to use this frame',
+			'label_more'     => 'More apps',
 			'label_copy'     => 'Copy link',
 			'label_copied'   => 'Link copied',
-			'label_saved'    => 'Picture saved. Open %s and add it from your gallery.',
+			'label_saved'    => 'Picture saved. Post it from your gallery and paste the caption.',
 			'label_capture'  => 'Capture',
 			'label_switch'   => 'Switch camera',
 			'label_cancel'   => 'Cancel',
@@ -75,7 +86,7 @@ class SPF_Settings {
 
 	public static function menu() {
 		add_submenu_page(
-			'edit.php?post_type=' . SPF_POST_TYPE,
+			SPF_Admin::PAGE,
 			__( 'Photo Frame Settings', 'slam-photo-frame' ),
 			__( 'Settings', 'slam-photo-frame' ),
 			'manage_options',
@@ -96,7 +107,7 @@ class SPF_Settings {
 			if ( 'frame_slug' === $key ) {
 				$clean[ $key ] = sanitize_title( $value ) ? sanitize_title( $value ) : $default;
 			} else {
-				$clean[ $key ] = '' === $value ? $default : sanitize_text_field( $value );
+				$clean[ $key ] = '' === $value && 'label_count' !== $key ? $default : sanitize_text_field( $value );
 			}
 		}
 		return $clean;

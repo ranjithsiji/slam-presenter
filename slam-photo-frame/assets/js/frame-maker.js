@@ -1,4 +1,5 @@
 /* Frame maker: puts a photo (camera or gallery) behind the frame PNG, exports a JPEG and shares it.
+ * The page shows the frame and a "Choose your photo" button; the photo is fitted in a full-screen editor.
  * Everything happens in the browser; only a use count is sent to the server. */
 (function () {
 	'use strict';
@@ -6,6 +7,7 @@
 	var MAX_SOURCE = 2400; // Longest side kept from a photo, enough for any frame and kind to phone memory.
 	var MIN_ZOOM = 0.5; // Zoom is relative to the size that just covers the frame's window.
 	var MAX_ZOOM = 6;
+	var BLUR_SIZE = 24; // The blurred background is the photo drawn this small, then stretched.
 
 	function clamp(v, min, max) {
 		return Math.min(max, Math.max(min, v));
@@ -26,15 +28,21 @@
 		this.l = this.cfg.labels;
 		this.canvas = el.querySelector('.spf-canvas');
 		this.ctx = this.canvas.getContext('2d');
+		this.preview = el.querySelector('.spf-frame-preview');
 		this.result = el.querySelector('.spf-result');
 		this.note = el.querySelector('.spf-note');
 		this.zoomInput = el.querySelector('[data-action=zoom]');
+		this.blurInput = el.querySelector('[data-action=blur]');
+		this.sheet = el.querySelector('.spf-sheet');
+		this.editor = el.querySelector('.spf-editor');
 		this.dialog = el.querySelector('.spf-camera');
 		this.video = this.dialog.querySelector('video');
 		this.photo = null;
+		this.blurred = null;
 		this.state = null;
 		this.file = null;
 		this.counted = false;
+		this.dragging = false;
 		this.facing = 'user';
 
 		this.frame = new Image();
@@ -45,8 +53,6 @@
 			self.canvas.width = self.frame.naturalWidth;
 			self.canvas.height = self.frame.naturalHeight;
 			self.hole = self.findWindow();
-			self.draw();
-			el.classList.add('is-ready');
 		};
 		this.frame.src = this.cfg.image;
 
@@ -101,44 +107,65 @@
 		return Math.max(this.hole.w / pw, this.hole.h / ph);
 	};
 
-	Maker.prototype.draw = function () {
+	// The photo, transformed by the current state (centre, zoom, quarter turns, mirror).
+	Maker.prototype.drawPhoto = function (source, scale) {
+		var ctx = this.ctx;
+		ctx.save();
+		ctx.translate(this.state.x, this.state.y);
+		ctx.scale(this.state.flip ? -1 : 1, 1);
+		ctx.rotate(this.state.rot * Math.PI / 2);
+		ctx.scale(scale, scale);
+		ctx.drawImage(source, -source.width / 2, -source.height / 2);
+		ctx.restore();
+	};
+
+	/**
+	 * @param {boolean} final For the exported picture: no editing aids (faded frame, grid).
+	 */
+	Maker.prototype.draw = function (final) {
 		var ctx = this.ctx;
 		var w = this.canvas.width;
 		var h = this.canvas.height;
+		var b = this.hole;
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(0, 0, w, h);
-		if (this.photo) {
-			var s = this.baseScale() * this.state.zoom;
-			ctx.save();
-			ctx.translate(this.state.x, this.state.y);
-			ctx.scale(this.state.flip ? -1 : 1, 1);
-			ctx.rotate(this.state.rot * Math.PI / 2);
-			ctx.scale(s, s);
-			ctx.imageSmoothingQuality = 'high';
-			ctx.drawImage(this.photo, -this.photo.width / 2, -this.photo.height / 2);
-			ctx.restore();
-		} else {
-			this.drawPlaceholder();
+		if (!this.photo) {
+			return;
 		}
-		ctx.drawImage(this.frame, 0, 0, w, h);
-	};
+		ctx.imageSmoothingEnabled = true;
+		ctx.imageSmoothingQuality = 'high';
+		if (this.state.blur) {
+			// Blurred copy of the photo filling the window, for the parts the photo itself does not cover.
+			var turned = this.state.rot % 2 === 1;
+			var bw = turned ? this.blurred.height : this.blurred.width;
+			var bh = turned ? this.blurred.width : this.blurred.height;
+			var keep = { x: this.state.x, y: this.state.y };
+			this.state.x = b.x + b.w / 2;
+			this.state.y = b.y + b.h / 2;
+			this.drawPhoto(this.blurred, Math.max(b.w / bw, b.h / bh) * 1.1);
+			this.state.x = keep.x;
+			this.state.y = keep.y;
+		}
+		this.drawPhoto(this.photo, this.baseScale() * this.state.zoom);
 
-	// A grey silhouette in the window until there is a photo.
-	Maker.prototype.drawPlaceholder = function () {
-		var ctx = this.ctx;
-		var b = this.hole;
-		var r = Math.min(b.w, b.h);
-		var cx = b.x + b.w / 2;
-		var cy = b.y + b.h / 2;
-		ctx.fillStyle = '#e4e6e8';
-		ctx.fillRect(b.x, b.y, b.w, b.h);
-		ctx.fillStyle = '#c3c8cd';
-		ctx.beginPath();
-		ctx.arc(cx, cy - r * 0.12, r * 0.16, 0, Math.PI * 2);
-		ctx.fill();
-		ctx.beginPath();
-		ctx.ellipse(cx, cy + r * 0.32, r * 0.3, r * 0.22, 0, Math.PI, 0);
-		ctx.fill();
+		if (!final && this.dragging) {
+			// While moving: the frame fades so the whole photo shows, with a rule-of-thirds grid over the window.
+			ctx.globalAlpha = 0.35;
+			ctx.drawImage(this.frame, 0, 0, w, h);
+			ctx.globalAlpha = 1;
+			ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+			ctx.lineWidth = Math.max(1, w / 600);
+			ctx.beginPath();
+			for (var i = 1; i < 3; i++) {
+				ctx.moveTo(b.x + b.w * i / 3, b.y);
+				ctx.lineTo(b.x + b.w * i / 3, b.y + b.h);
+				ctx.moveTo(b.x, b.y + b.h * i / 3);
+				ctx.lineTo(b.x + b.w, b.y + b.h * i / 3);
+			}
+			ctx.stroke();
+		} else {
+			ctx.drawImage(this.frame, 0, 0, w, h);
+		}
 	};
 
 	Maker.prototype.reset = function () {
@@ -187,10 +214,18 @@
 		c.height = Math.round(height * k);
 		c.getContext('2d').drawImage(source, 0, 0, c.width, c.height);
 		this.photo = c;
-		this.state = { zoom: 1, x: 0, y: 0, rot: 0, flip: !!flip };
+
+		var small = document.createElement('canvas');
+		var ks = BLUR_SIZE / Math.max(c.width, c.height);
+		small.width = Math.max(1, Math.round(c.width * ks));
+		small.height = Math.max(1, Math.round(c.height * ks));
+		small.getContext('2d').drawImage(c, 0, 0, small.width, small.height);
+		this.blurred = small;
+
+		this.state = { zoom: 1, x: 0, y: 0, rot: 0, flip: !!flip, blur: this.blurInput.checked };
 		this.counted = false;
 		this.reset();
-		this.showStep('edit');
+		this.openEditor();
 	};
 
 	Maker.prototype.loadFile = function (file) {
@@ -211,6 +246,32 @@
 		img.src = url;
 	};
 
+	Maker.prototype.openSheet = function () {
+		if (!this.sheet.open) {
+			this.sheet.showModal();
+		}
+	};
+
+	Maker.prototype.closeSheet = function () {
+		if (this.sheet.open) {
+			this.sheet.close();
+		}
+	};
+
+	Maker.prototype.openEditor = function () {
+		if (!this.editor.open) {
+			this.editor.showModal();
+			document.documentElement.classList.add('spf-no-scroll');
+		}
+		this.draw();
+	};
+
+	Maker.prototype.closeEditor = function () {
+		if (this.editor.open) {
+			this.editor.close();
+		}
+	};
+
 	Maker.prototype.showStep = function (name) {
 		Array.prototype.forEach.call(this.el.querySelectorAll('.spf-step'), function (step) {
 			step.hidden = step.getAttribute('data-step') !== name;
@@ -218,10 +279,8 @@
 		this.el.setAttribute('data-step', name);
 		var sharing = name === 'share';
 		this.result.hidden = !sharing;
-		this.canvas.hidden = sharing;
-		if (!sharing) {
-			this.setNote('');
-		}
+		this.preview.hidden = sharing;
+		this.setNote('');
 	};
 
 	Maker.prototype.setNote = function (text) {
@@ -231,20 +290,24 @@
 
 	Maker.prototype.finish = function () {
 		var self = this;
-		this.draw();
+		this.draw(true);
 		try {
 			this.canvas.toBlob(function (blob) {
+				self.draw();
 				if (!blob) {
 					return;
 				}
-				var name = (self.cfg.fileName || 'photo-frame') + '.jpg';
+				// A random number per picture, so saving several does not overwrite or rename earlier ones.
+				var name = (self.cfg.fileName || 'photo-frame') + '-' + Math.floor(100000 + Math.random() * 900000) + '.jpg';
 				self.file = new File([blob], name, { type: 'image/jpeg' });
 				if (self.result.src) {
 					URL.revokeObjectURL(self.result.src);
 				}
 				self.result.src = URL.createObjectURL(blob);
-				self.el.querySelector('[data-action=share]').hidden = !self.canShareFile();
+				self.showShareOptions();
 				self.showStep('share');
+				self.closeEditor();
+				self.el.querySelector('.spf-stage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 			}, 'image/jpeg', 0.92);
 		} catch (e) {
 			// A tainted canvas (frame on another domain without CORS) cannot be exported.
@@ -262,21 +325,54 @@
 		}
 		this.counted = true;
 		fetch(this.cfg.useUrl, { method: 'POST', keepalive: true, credentials: 'omit' }).catch(function () {});
+		var count = this.el.querySelector('.spf-count');
+		if (count && this.l.count) {
+			this.cfg.uses = (this.cfg.uses || 0) + 1;
+			count.querySelector('span').textContent = this.l.count.replace('%s', this.cfg.uses.toLocaleString());
+			count.hidden = false;
+		}
 	};
 
-	Maker.prototype.share = function (fallbackApp) {
+	// The caption sent with the picture: share text and the frame link.
+	Maker.prototype.caption = function () {
+		return [this.cfg.shareText, this.cfg.url].filter(Boolean).join(' ');
+	};
+
+	/**
+	 * "Share picture" only where the browser can share the image file itself; otherwise Download is the main button.
+	 */
+	Maker.prototype.showShareOptions = function () {
+		var canShare = this.canShareFile();
+		var download = this.el.querySelector('[data-step=share] [data-action=download]');
+		this.el.querySelector('[data-step=share] [data-action=share]').hidden = !canShare;
+		download.classList.toggle('spf-btn-primary', !canShare);
+		this.el.querySelector('[data-action=share-link]').hidden = !navigator.share;
+	};
+
+	/**
+	 * The browser's share menu with the picture alone: apps such as WhatsApp, Facebook and Telegram drop the image
+	 * when text comes with it. The caption goes to the clipboard instead, to paste in the post.
+	 */
+	Maker.prototype.share = function () {
 		var self = this;
-		var text = [this.cfg.shareText, this.cfg.url].filter(Boolean).join(' ');
-		navigator.share({ files: [this.file], title: this.cfg.title, text: text }).then(function () {
+		if (!this.canShareFile()) {
+			this.download();
+			return;
+		}
+		var copied = this.copyText(this.caption()); // Started within the tap, before the share menu takes focus.
+		navigator.share({ files: [this.file] }).then(function () {
 			self.count();
+			copied.then(function () {
+				self.setNote(self.l.caption_copied);
+			}, function () {});
 		}).catch(function (e) {
 			if (e && e.name !== 'AbortError') {
-				self.download(fallbackApp);
+				self.download();
 			}
 		});
 	};
 
-	Maker.prototype.download = function (app) {
+	Maker.prototype.download = function () {
 		var a = document.createElement('a');
 		a.href = this.result.src;
 		a.download = this.file.name;
@@ -284,23 +380,43 @@
 		a.click();
 		a.remove();
 		this.count();
-		if (app) {
-			this.setNote(this.l.saved.replace('%s', app));
-		}
+		this.setNote(this.l.saved);
 	};
 
-	Maker.prototype.copyLink = function () {
-		var self = this;
-		var done = function () {
-			self.setNote(self.l.copied);
-		};
+	// The frame link through the browser's share menu (any app), for inviting friends.
+	Maker.prototype.shareLink = function () {
+		navigator.share({ title: this.cfg.title, text: this.cfg.shareText, url: this.cfg.url }).catch(function () {});
+	};
+
+	/**
+	 * Copies text; resolves when done. The Clipboard API needs HTTPS, so falls back to a selected textarea.
+	 */
+	Maker.prototype.copyText = function (text) {
 		if (navigator.clipboard && window.isSecureContext) {
-			navigator.clipboard.writeText(this.cfg.url).then(done, function () {
-				window.prompt('', self.cfg.url);
-			});
-		} else {
-			window.prompt('', this.cfg.url);
+			return navigator.clipboard.writeText(text);
 		}
+		var tmp = document.createElement('textarea');
+		tmp.value = text;
+		tmp.setAttribute('readonly', '');
+		tmp.style.position = 'fixed';
+		tmp.style.opacity = '0';
+		this.el.appendChild(tmp);
+		tmp.select();
+		var ok = false;
+		try {
+			ok = document.execCommand('copy');
+		} catch (e) {}
+		tmp.remove();
+		return ok ? Promise.resolve() : Promise.reject();
+	};
+
+	Maker.prototype.copy = function (text, note) {
+		var self = this;
+		this.copyText(text).then(function () {
+			self.setNote(note);
+		}, function () {
+			window.prompt('', text);
+		});
 	};
 
 	Maker.prototype.bindButtons = function () {
@@ -320,17 +436,29 @@
 			if (!btn || !self.el.contains(btn)) {
 				return;
 			}
-			var action = btn.getAttribute('data-action');
-			switch (action) {
+			switch (btn.getAttribute('data-action')) {
+				case 'start':
+					self.openSheet();
+					break;
 				case 'choose':
+					self.closeSheet();
 					gallery.click();
 					break;
 				case 'take':
+					self.closeSheet();
 					self.takePhoto();
 					break;
 				case 'rotate':
 					self.state.rot = (self.state.rot + 1) % 4;
 					self.update();
+					break;
+				case 'rotate-left':
+					self.state.rot = (self.state.rot + 3) % 4;
+					self.update();
+					break;
+				case 'zoom-in':
+				case 'zoom-out':
+					self.zoomAt(self.state.zoom * (btn.getAttribute('data-action') === 'zoom-in' ? 1.2 : 1 / 1.2), self.hole.x + self.hole.w / 2, self.hole.y + self.hole.h / 2);
 					break;
 				case 'flip':
 					self.state.flip = !self.state.flip;
@@ -339,11 +467,14 @@
 				case 'reset':
 					self.reset();
 					break;
+				case 'close':
+					self.closeEditor();
+					break;
 				case 'done':
 					self.finish();
 					break;
 				case 'edit':
-					self.showStep('edit');
+					self.openEditor();
 					break;
 				case 'share':
 					self.share();
@@ -351,24 +482,38 @@
 				case 'download':
 					self.download();
 					break;
-				case 'app':
-					// Instagram, WhatsApp Status and Facebook take pictures only from the app: share sheet, else save it.
-					if (self.canShareFile()) {
-						self.share(btn.getAttribute('data-app'));
-					} else {
-						self.download(btn.getAttribute('data-app'));
-					}
+				case 'copy-caption':
+					self.copy(self.caption(), self.l.caption_copied);
+					break;
+				case 'share-link':
+					self.shareLink();
 					break;
 				case 'copy':
-					self.copyLink();
+					self.copy(self.cfg.url, self.l.copied);
 					break;
 			}
+		});
+
+		// Tapping the dimmed backdrop closes the photo source sheet.
+		this.sheet.addEventListener('click', function (e) {
+			if (e.target === self.sheet) {
+				self.closeSheet();
+			}
+		});
+		this.editor.addEventListener('close', function () {
+			document.documentElement.classList.remove('spf-no-scroll');
 		});
 
 		this.zoomInput.addEventListener('input', function () {
 			var t = parseFloat(self.zoomInput.value);
 			var zoom = MIN_ZOOM * Math.pow(MAX_ZOOM / MIN_ZOOM, t);
 			self.zoomAt(zoom, self.hole.x + self.hole.w / 2, self.hole.y + self.hole.h / 2);
+		});
+		this.blurInput.addEventListener('change', function () {
+			if (self.state) {
+				self.state.blur = self.blurInput.checked;
+				self.draw();
+			}
 		});
 	};
 
@@ -388,15 +533,20 @@
 			return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, d: Math.hypot(a.x - b.x, a.y - b.y), n: ids.length };
 		}
 
+		function setDragging(on) {
+			self.dragging = on;
+			canvas.classList.toggle('is-dragging', on);
+			self.draw();
+		}
+
 		canvas.addEventListener('pointerdown', function (e) {
 			if (!self.photo) {
-				self.el.querySelector('[data-input=gallery]').click();
 				return;
 			}
 			canvas.setPointerCapture(e.pointerId);
 			pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
 			last = snapshot();
-			canvas.classList.add('is-dragging');
+			setDragging(true);
 		});
 		canvas.addEventListener('pointermove', function (e) {
 			if (!pointers[e.pointerId]) {
@@ -416,13 +566,13 @@
 				delete pointers[e.pointerId];
 				last = snapshot();
 				if (!last) {
-					canvas.classList.remove('is-dragging');
+					setDragging(false);
 				}
 			});
 		});
 
 		canvas.addEventListener('wheel', function (e) {
-			if (!self.photo || self.el.getAttribute('data-step') !== 'edit') {
+			if (!self.photo) {
 				return;
 			}
 			e.preventDefault();
@@ -452,7 +602,7 @@
 	// Live camera in a dialog on computers; phones (and pages without HTTPS) use the system camera instead.
 	Maker.prototype.takePhoto = function () {
 		var live = navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.isSecureContext &&
-			!window.matchMedia('(pointer: coarse)').matches && this.dialog.showModal;
+			!window.matchMedia('(pointer: coarse)').matches;
 		if (live) {
 			this.openCamera();
 		} else {
@@ -506,8 +656,8 @@
 				self.openCamera();
 			} else if (action === 'camera-capture' && self.video.videoWidth) {
 				// Selfies start mirrored, as seen in the preview; Flip turns them back.
-				self.setPhoto(self.video, self.video.videoWidth, self.video.videoHeight, self.facing === 'user');
 				self.dialog.close();
+				self.setPhoto(self.video, self.video.videoWidth, self.video.videoHeight, self.facing === 'user');
 			}
 			if (action) {
 				e.stopPropagation(); // Not the maker's own click handler.
