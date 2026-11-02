@@ -201,19 +201,26 @@ if ( false !== $import_result ) {
 			</form>
 
 			<form method="get" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ssp-card">
-				<input type="hidden" name="action" value="ssp_export_csv">
-				<?php wp_nonce_field( 'ssp_export_csv' ); ?>
-				<h2><?php esc_html_e( 'Export to CSV', 'slam-presenter-profiles' ); ?></h2>
-				<p><?php esc_html_e( 'Download presenters with their time slots, profile links and photo URLs, eg. for the brochure or certificates.', 'slam-presenter-profiles' ); ?></p>
+				<input type="hidden" name="action" value="ssp_export">
+				<?php wp_nonce_field( 'ssp_export', '_wpnonce', false ); ?>
+				<h2><?php esc_html_e( 'Export presenters', 'slam-presenter-profiles' ); ?></h2>
+				<p><?php esc_html_e( 'Download presenters with their slam, time slot, talk, contact details, links, profile and photo URLs, eg. for the brochure or certificates.', 'slam-presenter-profiles' ); ?></p>
 				<p>
-					<select name="event">
-						<option value="0"><?php esc_html_e( 'All events', 'slam-presenter-profiles' ); ?></option>
+					<label for="ssp_export_event"><strong><?php esc_html_e( 'Which presenters', 'slam-presenter-profiles' ); ?></strong></label><br>
+					<select name="event" id="ssp_export_event">
+						<option value="0"><?php esc_html_e( 'All slams in this edition', 'slam-presenter-profiles' ); ?></option>
 						<?php foreach ( $events as $ev ) : ?>
 							<option value="<?php echo (int) $ev->term_id; ?>"><?php echo esc_html( $ev->name ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</p>
-				<?php submit_button( __( 'Download CSV', 'slam-presenter-profiles' ), 'secondary', 'submit', false ); ?>
+				<p class="ssp-export-formats">
+					<strong><?php esc_html_e( 'Format', 'slam-presenter-profiles' ); ?></strong><br>
+					<label><input type="radio" name="format" value="xlsx" checked> <?php esc_html_e( 'Excel (.xlsx)', 'slam-presenter-profiles' ); ?></label>
+					<label><input type="radio" name="format" value="csv"> <?php esc_html_e( 'CSV (.csv)', 'slam-presenter-profiles' ); ?></label>
+				</p>
+				<p class="description"><?php esc_html_e( 'A single slam is exported in timetable order. The file includes email and phone numbers: share it with care.', 'slam-presenter-profiles' ); ?></p>
+				<?php submit_button( __( 'Download', 'slam-presenter-profiles' ), 'secondary', 'submit', false ); ?>
 			</form>
 		</div>
 	<?php endif; ?>

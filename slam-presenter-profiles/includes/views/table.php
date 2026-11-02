@@ -7,6 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<h1 class="wp-heading-inline"><?php esc_html_e( 'Presenters', 'slam-presenter-profiles' ); ?></h1>
 	<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=' . SSP_POST_TYPE ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add Presenter', 'slam-presenter-profiles' ); ?></a>
 	<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . SSP_POST_TYPE . '&page=ssp-import' ) ); ?>" class="page-title-action"><?php esc_html_e( 'Import CSV', 'slam-presenter-profiles' ); ?></a>
+	<?php if ( current_user_can( 'manage_options' ) ) : ?>
+		<a href="<?php echo esc_url( SSP_Export::url( 'xlsx' ) ); ?>" class="page-title-action ssp-export-link" data-format="xlsx"><?php esc_html_e( 'Export Excel', 'slam-presenter-profiles' ); ?></a>
+		<a href="<?php echo esc_url( SSP_Export::url( 'csv' ) ); ?>" class="page-title-action ssp-export-link" data-format="csv"><?php esc_html_e( 'Export CSV', 'slam-presenter-profiles' ); ?></a>
+	<?php endif; ?>
 	<hr class="wp-header-end">
 
 	<div class="ssp-stats" id="ssp-stats"></div>

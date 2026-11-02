@@ -1554,3 +1554,7 @@ li.ui-draggable-dragging {
 .ssp-setup-row.is-saved td:first-child input {
 	font-weight: 600;
 }
+
+.ssp-export-formats label {
+	margin-right: 16px;
+}

@@ -23,7 +23,6 @@ class SSP_Admin {
 		add_filter( 'bulk_actions-edit-' . SSP_POST_TYPE, array( __CLASS__, 'bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-' . SSP_POST_TYPE, array( __CLASS__, 'handle_bulk_actions' ), 10, 3 );
 		add_action( 'admin_notices', array( __CLASS__, 'bulk_notice' ) );
-		add_action( 'admin_post_ssp_export_csv', array( __CLASS__, 'handle_export' ) );
 	}
 
 	public static function register_menu() {
@@ -497,61 +496,6 @@ class SSP_Admin {
 			/* translators: 1: photos fetched, 2: failures */
 			esc_html( sprintf( __( '%1$d photo(s) fetched, %2$d failed. See Science Slam → Photos for the reasons.', 'slam-presenter-profiles' ), $ok, $failed ) )
 		);
-	}
-
-	public static function handle_export() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Permission denied.', 'slam-presenter-profiles' ) );
-		}
-		check_admin_referer( 'ssp_export_csv' );
-		$event = isset( $_GET['event'] ) ? absint( $_GET['event'] ) : 0;
-		$args  = array(
-			'post_type'      => SSP_POST_TYPE,
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-			'orderby'        => 'title',
-			'order'          => 'ASC',
-		);
-		if ( $event ) {
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => SSP_TAXONOMY,
-					'terms'    => $event,
-				),
-			);
-		} else {
-			$args = SSP_Editions::scope_query( $args );
-		}
-		$posts = get_posts( $args );
-
-		nocache_headers();
-		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=slam-presenters-' . gmdate( 'Y-m-d' ) . '.csv' );
-		$out = fopen( 'php://output', 'w' );
-		fwrite( $out, "\xEF\xBB\xBF" ); // UTF-8 BOM so Excel shows Malayalam correctly.
-		$keys = array( 'name_en', 'institution', 'designation', 'talk_title', 'summary', 'abstract', 'award', 'video_url', 'photo_drive_url', 'email', 'phone' );
-		fputcsv( $out, array_merge( array( 'ID', 'Name (Malayalam)' ), $keys, array( 'Events', 'Time slot', 'Profile URL', 'Photo URL' ) ) );
-		foreach ( $posts as $post ) {
-			$row = array( $post->ID, $post->post_title );
-			foreach ( $keys as $key ) {
-				$row[] = SSP_Presenter::get( $post->ID, $key );
-			}
-			$terms = wp_get_post_terms( $post->ID, SSP_TAXONOMY, array( 'fields' => 'all' ) );
-			$row[] = implode( '; ', wp_list_pluck( $terms, 'name' ) );
-			$slots = array();
-			foreach ( $terms as $term ) {
-				$slot = SSP_Timetable::find_slot( $term->term_id, $post->ID );
-				if ( $slot ) {
-					$slots[] = SSP_Timetable::format_minutes( $slot['start'] );
-				}
-			}
-			$row[] = implode( '; ', $slots );
-			$row[] = get_permalink( $post );
-			$row[] = (string) get_the_post_thumbnail_url( $post, 'full' );
-			fputcsv( $out, $row );
-		}
-		fclose( $out );
-		exit;
 	}
 
 	public static function render_timetable_page() {

@@ -35,6 +35,10 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 
 **New timetable** (eg. the final): *Timetable → Add New Timetable* (asks for the number of talk slots). Enter the event (name, short name for shortcodes, type, date, venue, banner text, start time) and start from a blank day, a copy of another event's day layout (sessions, breaks and empty talk slots) or pasted timetable text. Fill talk slots with the presenter picker (*All presenters* lists everyone), or for a final use **Select finalists…**: a popup with every regional slam's presenters side by side to tick and add in one go (empty slots are filled first). Saving adds the scheduled presenters to the event, so for a final their profile banner shows the final.
 
+## Export
+
+Presenters can be downloaded as **Excel (.xlsx)** or **CSV**: *Import / Export → Export presenters*, or the *Export Excel* / *Export CSV* buttons on *All Presenters* and *Presenter Table* (they follow the slam filter; no filter = the whole working edition). A single slam is exported in timetable order. Columns: names, institution, slam, edition, talk no. and time slot, title, summary, abstract, bio, award, email, phone, links, photo and profile URLs, status. The file contains contact details, so share it with care.
+
 ## Shortcodes
 
 | Shortcode | Output |

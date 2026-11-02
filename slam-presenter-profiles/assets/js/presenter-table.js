@@ -164,7 +164,15 @@
 		}).join('');
 	}
 
+	// Export buttons follow the slam filter.
+	function updateExportLinks() {
+		document.querySelectorAll('.ssp-export-link').forEach(function (a) {
+			a.href = a.href.replace(/([?&]event=)\d*/, '$1' + (state.event || 0));
+		});
+	}
+
 	function render() {
+		updateExportLinks();
 		var list = filtered();
 		var per = state.per || list.length || 1;
 		var pages = Math.max(1, Math.ceil(list.length / per));
