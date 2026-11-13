@@ -35,6 +35,10 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 
 **New timetable** (eg. the final): *Timetable → Add New Timetable* (asks for the number of talk slots). Enter the event (name, short name for shortcodes, type, date, venue, banner text, start time) and start from a blank day, a copy of another event's day layout (sessions, breaks and empty talk slots) or pasted timetable text. Fill talk slots with the presenter picker (*All presenters* lists everyone), or for a final use **Select finalists…**: a popup with every regional slam's presenters side by side to tick and add in one go (empty slots are filled first). Saving adds the scheduled presenters to the event, so for a final their profile banner shows the final.
 
+## Results
+
+*Science Slam → Results* lists each slam of the working edition. *Declare result* opens the slam: click **Select presenters…**, tick the presenters in the popup (this slam's presenters in talk order, or the whole edition), drag to order, set the heading and note, choose Draft or Published and save. Show it on a page with `[slam_results event="ernakulam"]` (`columns="3"` by default). Visitors see nothing until the result is published.
+
 ## Export
 
 Presenters can be downloaded as **Excel (.xlsx)** or **CSV**: *Import / Export → Export presenters*, or the *Export Excel* / *Export CSV* buttons on *All Presenters* and *Presenter Table* (they follow the slam filter; no filter = the whole working edition). A single slam is exported in timetable order. Columns: names, institution, slam, edition, talk no. and time slot, title, summary, abstract, bio, award, email, phone, links, photo and profile URLs, status. The file contains contact details, so share it with care.
@@ -47,6 +51,7 @@ Presenters can be downloaded as **Excel (.xlsx)** or **CSV**: *Import / Export �
 | `[slam_presenters event="ernakulam"]` | Photo grid. `columns="4"`, `order="timetable"` or `"name"`, `show="title"` or `""`. |
 | `[slam_talks event="final"]` | Numbered table of talks (as on the 2025 profiles). Not shown on profiles; use it on an event page if wanted. |
 | `[slam_presenter id="123"]` | One profile card anywhere. |
+| `[slam_results event="ernakulam"]` | The slam's declared result (selected presenters). `columns="3"`. Hidden until published. |
 
 `event` accepts the event slug or term ID.
 

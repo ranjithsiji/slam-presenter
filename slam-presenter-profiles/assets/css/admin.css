@@ -1558,3 +1558,98 @@ li.ui-draggable-dragging {
 .ssp-export-formats label {
 	margin-right: 16px;
 }
+
+/* Results editor */
+.ssp-result-head {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ssp-result-head .ssp-result-select {
+	margin-left: auto;
+}
+
+.ssp-result-list {
+	margin: 8px 0 0;
+	list-style: none;
+}
+
+.ssp-result-list li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 6px;
+	padding: 8px 10px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.ssp-result-list li img,
+.ssp-result-list li .ssp-tt-noimg,
+.ssp-result-pool li img,
+.ssp-result-pool li .ssp-tt-noimg {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex: none;
+}
+
+.ssp-result-list .ssp-result-empty {
+	justify-content: center;
+	color: #646970;
+	border-style: dashed;
+}
+
+.ssp-result-remove {
+	margin-left: auto;
+	color: #b32d2e;
+}
+
+.ssp-result-dirty {
+	margin-left: 10px;
+	color: #E98C00;
+	font-weight: 600;
+}
+
+.ssp-result-dialog {
+	width: min(760px, calc(100vw - 48px));
+}
+
+.ssp-result-dialog .ssp-picker-scopes {
+	padding: 0;
+}
+
+.ssp-result-pool {
+	flex: 1;
+	overflow: auto;
+	padding: 8px 20px;
+}
+
+.ssp-result-pool ul {
+	margin: 0;
+}
+
+.ssp-result-pool li label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.ssp-result-pool li label:hover {
+	background: #FEF9E1;
+}
+
+.ssp-result-pool li label:has(input:checked:not(:disabled)) {
+	background: #F9F0C8;
+	box-shadow: inset 3px 0 0 #FD9800;
+}
+
+.ssp-result-pool li label.is-in {
+	opacity: 0.6;
+}

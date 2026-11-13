@@ -27,6 +27,7 @@ class SSP_Settings {
 			'label_schedule'   => 'മുഴുവൻ സമയക്രമം കാണുക',
 			'label_slam_page'  => 'സ്ലാം വിവരങ്ങൾ',
 			'label_tt_soon'    => 'സമയക്രമം ഉടൻ പ്രസിദ്ധീകരിക്കും',
+			'label_result'     => 'RESULT · ഫലം',
 			'label_no'         => 'No',
 			'label_talk'       => 'അവതരണം',
 			'label_presenter'  => 'അവതാരക/ൻ',

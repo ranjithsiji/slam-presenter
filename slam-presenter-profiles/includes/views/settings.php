@@ -11,6 +11,7 @@ $labels   = array(
 	'label_papers'    => __( '"Papers" heading', 'slam-presenter-profiles' ),
 	'label_schedule'  => __( 'Profile: "full schedule" link', 'slam-presenter-profiles' ),
 	'label_slam_page' => __( 'Timetable: link to the slam page', 'slam-presenter-profiles' ),
+	'label_result'    => __( 'Results: label above the heading', 'slam-presenter-profiles' ),
 	'label_tt_soon'   => __( 'Unpublished timetable: note for visitors (blank = show nothing)', 'slam-presenter-profiles' ),
 	'label_talks'     => __( '[slam_talks] heading', 'slam-presenter-profiles' ),
 	'label_no'        => __( 'Table: number column', 'slam-presenter-profiles' ),
