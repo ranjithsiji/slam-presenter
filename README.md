@@ -5,6 +5,7 @@ WordPress plugin for scienceslam.in: presenter profiles, slam events (4 regional
 ## Repository layout
 
 - [`slam-presenter-profiles/`](slam-presenter-profiles/): the WordPress plugin (zip this folder to install it).
+- [`slam-presenter-map/`](slam-presenter-map/): a map of the presenters' institutions, shortcode `[slam_presenter_map]` (zip this folder to install it; uses the presenters and timetables of Presenter Profiles).
 - [`slam-presenter-profiles/tools/`](slam-presenter-profiles/tools/): WP-CLI helpers and the photo face-centering script.
 - [`slam-photo-frame/`](slam-photo-frame/): a separate plugin for "ഞാനും പങ്കെടുക്കുന്നു" campaign photo frames (see [Photo frames](#photo-frames)).
 - [`examples/sample-presenters.csv`](examples/sample-presenters.csv): a Google Form responses export in the format *Import / Export* expects (same column headers, made-up presenters).

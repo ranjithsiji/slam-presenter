@@ -1,0 +1,29 @@
+.spm-map { height: min(72vh, 640px); min-height: 360px; border-radius: 8px; border: 1px solid #ddd; z-index: 0; margin: 12px 0 4px }
+.spm-map img.leaflet-tile { max-width: none !important; max-height: none !important; border: 0; box-shadow: none }
+.spm-map img { max-width: none !important }
+.spm-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center }
+.spm-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; margin: 0 }
+.spm-chip input { width: 18px; height: 18px; margin: 0 }
+.spm-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px rgba(0,0,0,.25) }
+.spm-btn { margin-left: auto; min-height: 40px; padding: 6px 14px; border: 1px solid #ccc; border-radius: 6px; background: #fff; color: #222; cursor: pointer; font-size: 14px }
+.spm-btn + .spm-btn { margin-left: 0 }
+.spm-btn[hidden] { display: none }
+.spm-pin { background: none; border: 0 }
+.spm-pin span { display: block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.45) }
+.spm-pop { display: flex; gap: 10px; align-items: flex-start; min-width: 200px; line-height: 1.35 }
+.spm-pop img { border-radius: 6px; object-fit: cover; flex: none; width: 56px; height: 56px }
+.spm-pop-name { font-weight: 700 }
+.spm-muted { color: #6b7280; font-size: .92em }
+.spm-credit { font-size: 12px; color: #6b7280; margin: 0 0 16px }
+.spm-map .spm-label { background: none; border: 0; box-shadow: none; padding: 0; color: #5a3d12; font: 600 11px/1.1 sans-serif; text-shadow: 0 0 3px #fff, 0 0 3px #fff }
+.spm-map .spm-label::before { display: none }
+.spm-map .spm-state { color: #2f5216; font-size: 15px; letter-spacing: .04em }
+.spm-map.spm-small .spm-label { display: none }
+.spm-h { margin-top: 24px }
+.spm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px }
+.spm-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; background: #fff }
+.spm-card-h { font-weight: 700; margin-bottom: 6px }
+.spm-count { display: inline-block; font-size: 12px; font-weight: 600; background: #f1f3f5; border-radius: 4px; padding: 0 6px; margin-left: 4px }
+.spm-card ul { list-style: none; margin: 0; padding: 0 }
+.spm-card li { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 6px }
+.spm-card li .spm-dot { margin-top: 6px }

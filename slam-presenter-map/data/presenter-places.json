@@ -1,0 +1,551 @@
+{
+ "_about": "Where each presenter institution is, for the presenters map (/map). A presenter belongs to the first place whose \"match\" text appears in their institution (case-insensitive). Coordinates from OpenStreetMap (Nominatim), checked by hand; \"approx\" means the town, not the campus.",
+ "places": [
+  {
+   "name": "Amrita Vishwa Vidyapeetham, Amritapuri",
+   "match": [
+    "amrita"
+   ],
+   "lat": 9.09633,
+   "lng": 76.49003
+  },
+  {
+   "name": "Rajiv Gandhi Centre for Biotechnology",
+   "match": [
+    "rajiv gandhi centre for biotechnology"
+   ],
+   "lat": 8.52558,
+   "lng": 76.90792
+  },
+  {
+   "name": "CSIR – CFTRI, Mysuru",
+   "match": [
+    "cftri"
+   ],
+   "lat": 12.31744,
+   "lng": 76.64243
+  },
+  {
+   "name": "CSIR – NIIST, Thiruvananthapuram",
+   "match": [
+    "niist",
+    "national institute for interdisciplinary science"
+   ],
+   "lat": 8.47176,
+   "lng": 76.99226
+  },
+  {
+   "name": "CSIR – National Institute of Oceanography, Kochi",
+   "match": [
+    "national institute of oceanography"
+   ],
+   "lat": 9.9679,
+   "lng": 76.24444,
+   "approx": true
+  },
+  {
+   "name": "Central University of Karnataka",
+   "match": [
+    "central university of karnataka"
+   ],
+   "lat": 17.2409,
+   "lng": 76.76974,
+   "approx": true
+  },
+  {
+   "name": "Central University of Kerala, Kasaragod",
+   "match": [
+    "central university of kerala"
+   ],
+   "lat": 12.3932,
+   "lng": 75.0921
+  },
+  {
+   "name": "Mangalore University",
+   "match": [
+    "mangalore university"
+   ],
+   "lat": 12.86982,
+   "lng": 74.84301,
+   "approx": true
+  },
+  {
+   "name": "Kerala Agricultural University, Vellanikkara",
+   "match": [
+    "vellanikkara",
+    "college of forestry"
+   ],
+   "lat": 10.54489,
+   "lng": 76.28639
+  },
+  {
+   "name": "Christ College, Irinjalakuda",
+   "match": [
+    "christ college"
+   ],
+   "lat": 10.35579,
+   "lng": 76.21365
+  },
+  {
+   "name": "Cochin University of Science and Technology",
+   "match": [
+    "cochin university",
+    "cusat"
+   ],
+   "lat": 10.04491,
+   "lng": 76.32614
+  },
+  {
+   "name": "College of Agriculture, Vellayani",
+   "match": [
+    "vellayani"
+   ],
+   "lat": 8.42919,
+   "lng": 76.98822
+  },
+  {
+   "name": "University of Kerala, Kariavattom",
+   "match": [
+    "kariavattom"
+   ],
+   "lat": 8.56151,
+   "lng": 76.88283,
+   "approx": true
+  },
+  {
+   "name": "Government College for Women, Thiruvananthapuram",
+   "match": [
+    "government college for women"
+   ],
+   "lat": 8.49949,
+   "lng": 76.95667
+  },
+  {
+   "name": "University of Calicut",
+   "match": [
+    "university of calicut"
+   ],
+   "lat": 11.13641,
+   "lng": 75.89045
+  },
+  {
+   "name": "Sir Syed College, Taliparamba",
+   "match": [
+    "sir syed college"
+   ],
+   "lat": 12.03886,
+   "lng": 75.3781
+  },
+  {
+   "name": "Government College, Madappally",
+   "match": [
+    "madappally"
+   ],
+   "lat": 11.63689,
+   "lng": 75.56892,
+   "approx": true
+  },
+  {
+   "name": "Government Engineering College, Kozhikode",
+   "match": [
+    "government engineering college kozhikode"
+   ],
+   "lat": 11.28645,
+   "lng": 75.77005
+  },
+  {
+   "name": "Government Victoria College, Palakkad",
+   "match": [
+    "victoria college"
+   ],
+   "lat": 10.78537,
+   "lng": 76.65091
+  },
+  {
+   "name": "ICAR – Indian Institute of Spices Research, Kozhikode",
+   "match": [
+    "spices research"
+   ],
+   "lat": 11.28774,
+   "lng": 75.8221,
+   "approx": true
+  },
+  {
+   "name": "IIIT Kottayam",
+   "match": [
+    "information technology (iiit), kottayam",
+    "information technology, kottayam"
+   ],
+   "lat": 9.75544,
+   "lng": 76.64954
+  },
+  {
+   "name": "Indian Institute of Science, Bengaluru",
+   "match": [
+    "indian institute of science, bangalore"
+   ],
+   "lat": 13.02223,
+   "lng": 77.56718
+  },
+  {
+   "name": "IIST, Thiruvananthapuram",
+   "match": [
+    "space science and technology"
+   ],
+   "lat": 8.62672,
+   "lng": 77.03072,
+   "approx": true
+  },
+  {
+   "name": "IIT Hyderabad",
+   "match": [
+    "technology, hyderabad"
+   ],
+   "lat": 17.59228,
+   "lng": 78.12219
+  },
+  {
+   "name": "IIT Indore",
+   "match": [
+    "indian institute of technology, indore"
+   ],
+   "lat": 22.52693,
+   "lng": 75.92621
+  },
+  {
+   "name": "IIT Madras",
+   "match": [
+    "technology, madras"
+   ],
+   "lat": 12.99416,
+   "lng": 80.23668
+  },
+  {
+   "name": "IIT Palakkad",
+   "match": [
+    "technology, palakkad"
+   ],
+   "lat": 10.80028,
+   "lng": 76.75477,
+   "approx": true
+  },
+  {
+   "name": "INCOIS, Hyderabad",
+   "match": [
+    "incois"
+   ],
+   "lat": 17.52945,
+   "lng": 78.40042
+  },
+  {
+   "name": "IMHANS, Kozhikode",
+   "match": [
+    "imhans"
+   ],
+   "lat": 11.24506,
+   "lng": 75.77547,
+   "approx": true
+  },
+  {
+   "name": "Invesdwin GmbH, Germany",
+   "match": [
+    "invesdwin"
+   ],
+   "lat": 51.16382,
+   "lng": 10.44783,
+   "approx": true
+  },
+  {
+   "name": "JNTBGRI, Palode",
+   "match": [
+    "tropical botanic garden"
+   ],
+   "lat": 8.72326,
+   "lng": 77.02839,
+   "approx": true
+  },
+  {
+   "name": "Kannur University Campus, Mananthavady",
+   "match": [
+    "mananthavady"
+   ],
+   "lat": 11.82988,
+   "lng": 75.94189,
+   "approx": true
+  },
+  {
+   "name": "Digital University Kerala, Thiruvananthapuram",
+   "match": [
+    "digital university kerala",
+    "digital sciences"
+   ],
+   "lat": 8.5929,
+   "lng": 76.85937,
+   "approx": true
+  },
+  {
+   "name": "Kerala University of Fisheries and Ocean Studies",
+   "match": [
+    "fisheries and ocean studies"
+   ],
+   "lat": 9.89664,
+   "lng": 76.32597,
+   "approx": true
+  },
+  {
+   "name": "Little Flower College, Guruvayur",
+   "match": [
+    "little flower college"
+   ],
+   "lat": 10.60525,
+   "lng": 76.03813
+  },
+  {
+   "name": "Loyola College, Chennai",
+   "match": [
+    "loyola college"
+   ],
+   "lat": 13.06541,
+   "lng": 80.2337
+  },
+  {
+   "name": "MES Asmabi College, Kodungallur",
+   "match": [
+    "asmabi"
+   ],
+   "lat": 10.26842,
+   "lng": 76.14205
+  },
+  {
+   "name": "Maharaja's College, Ernakulam",
+   "match": [
+    "maharaja's college"
+   ],
+   "lat": 9.97337,
+   "lng": 76.28511
+  },
+  {
+   "name": "Malabar Christian College, Kozhikode",
+   "match": [
+    "malabar christian college"
+   ],
+   "lat": 11.26399,
+   "lng": 75.77864
+  },
+  {
+   "name": "Mar Thoma College, Thiruvalla",
+   "match": [
+    "mar thoma college"
+   ],
+   "lat": 9.40069,
+   "lng": 76.58472
+  },
+  {
+   "name": "Morning Star College, Angamaly",
+   "match": [
+    "morning star"
+   ],
+   "lat": 10.17574,
+   "lng": 76.37687
+  },
+  {
+   "name": "St. Albert's College, Ernakulam",
+   "match": [
+    "st. albert's"
+   ],
+   "lat": 9.98575,
+   "lng": 76.27861
+  },
+  {
+   "name": "PSG Institute of Advanced Studies, Coimbatore",
+   "match": [
+    "psg institute"
+   ],
+   "lat": 11.02778,
+   "lng": 76.99862,
+   "approx": true
+  },
+  {
+   "name": "Payyanur College",
+   "match": [
+    "payyanur college"
+   ],
+   "lat": 12.10322,
+   "lng": 75.23333
+  },
+  {
+   "name": "Rajagiri College of Social Sciences, Kalamassery",
+   "match": [
+    "rajagiri"
+   ],
+   "lat": 10.05295,
+   "lng": 76.31488
+  },
+  {
+   "name": "SRM Institute of Science and Technology, Chennai",
+   "match": [
+    "srm institute"
+   ],
+   "lat": 12.82344,
+   "lng": 80.04504
+  },
+  {
+   "name": "Sacred Heart College, Thevara",
+   "match": [
+    "sacred heart college"
+   ],
+   "lat": 9.93875,
+   "lng": 76.29601
+  },
+  {
+   "name": "Mahatma Gandhi University, Kottayam",
+   "match": [
+    "mahatma gandhi university"
+   ],
+   "lat": 9.65814,
+   "lng": 76.53333
+  },
+  {
+   "name": "SCTIMST, Thiruvananthapuram",
+   "match": [
+    "sree chitra"
+   ],
+   "lat": 8.52251,
+   "lng": 76.93006,
+   "approx": true
+  },
+  {
+   "name": "Sree Narayana College, Kollam",
+   "match": [
+    "sree narayana college, kollam"
+   ],
+   "lat": 8.88252,
+   "lng": 76.6012
+  },
+  {
+   "name": "Sree Neelakanta Government Sanskrit College, Pattambi",
+   "match": [
+    "neelakanta"
+   ],
+   "lat": 10.80486,
+   "lng": 76.17802,
+   "approx": true
+  },
+  {
+   "name": "St. John's College, Anchal",
+   "match": [
+    "st. john's college, anchal"
+   ],
+   "lat": 8.9283,
+   "lng": 76.91718
+  },
+  {
+   "name": "St. Joseph's College, Devagiri",
+   "match": [
+    "devagiri"
+   ],
+   "lat": 11.26363,
+   "lng": 75.83559
+  },
+  {
+   "name": "St. Joseph's College, Irinjalakuda",
+   "match": [
+    "st. joseph's college (autonomous), irinjalakuda"
+   ],
+   "lat": 10.33981,
+   "lng": 76.21418
+  },
+  {
+   "name": "St. Stephen's College, Pathanapuram",
+   "match": [
+    "st. stephen's"
+   ],
+   "lat": 9.0927,
+   "lng": 76.8563,
+   "approx": true
+  },
+  {
+   "name": "St. Teresa's College, Ernakulam",
+   "match": [
+    "st. teresa's"
+   ],
+   "lat": 9.97545,
+   "lng": 76.27901
+  },
+  {
+   "name": "St. Thomas College, Thrissur",
+   "match": [
+    "st. thomas college (autonomous), thrissur"
+   ],
+   "lat": 10.52377,
+   "lng": 76.21923
+  },
+  {
+   "name": "St. Thomas College, Kozhencherry",
+   "match": [
+    "kozhencherry"
+   ],
+   "lat": 9.33933,
+   "lng": 76.71688
+  },
+  {
+   "name": "Kannur University, Payyanur Campus",
+   "match": [
+    "swami anandatheertha"
+   ],
+   "lat": 12.10322,
+   "lng": 75.23333,
+   "approx": true
+  },
+  {
+   "name": "Tata Institute of Fundamental Research, Mumbai",
+   "match": [
+    "tata institute of fundamental research"
+   ],
+   "lat": 18.90712,
+   "lng": 72.80496
+  },
+  {
+   "name": "ICFO – The Institute of Photonic Sciences, Barcelona",
+   "match": [
+    "photonic sciences"
+   ],
+   "lat": 41.2861,
+   "lng": 1.98242,
+   "approx": true
+  },
+  {
+   "name": "UGC-DAE Consortium for Scientific Research, Indore",
+   "match": [
+    "ugc-dae"
+   ],
+   "lat": 22.72036,
+   "lng": 75.8682,
+   "approx": true
+  },
+  {
+   "name": "University College, Thiruvananthapuram",
+   "match": [
+    "university college"
+   ],
+   "lat": 8.50211,
+   "lng": 76.94872
+  },
+  {
+   "name": "Vellore Institute of Technology",
+   "match": [
+    "vellore institute"
+   ],
+   "lat": 12.96975,
+   "lng": 79.16066
+  },
+  {
+   "name": "University of Szczecin, Poland",
+   "match": [
+    "szczecin"
+   ],
+   "lat": 53.41841,
+   "lng": 14.53569
+  }
+ ]
+}
