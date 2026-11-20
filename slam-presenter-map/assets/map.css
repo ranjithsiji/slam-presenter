@@ -27,3 +27,11 @@
 .spm-card ul { list-style: none; margin: 0; padding: 0 }
 .spm-card li { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 6px }
 .spm-card li .spm-dot { margin-top: 6px }
+/* The theme's link and button styles must not reach Leaflet's own controls. */
+.spm-map .leaflet-bar a, .spm-map .leaflet-bar a:hover { color: #333; background-color: #fff; text-decoration: none; font: bold 18px/30px "Lucida Console", Monaco, monospace; border-radius: 0; padding: 0; box-shadow: none }
+.spm-map .leaflet-bar a:first-child { border-top-left-radius: 4px; border-top-right-radius: 4px }
+.spm-map .leaflet-bar a:last-child { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px }
+.spm-map .leaflet-control-layers-toggle { width: 36px; height: 36px; background-size: 26px 26px }
+.spm-map .leaflet-control-layers label { margin: 0; font-size: 14px; line-height: 1.6 }
+.spm-map .leaflet-control-layers input { margin: 0 6px 0 0 }
+.spm-map .leaflet-control-attribution a { color: #0078a8 }
