@@ -14,9 +14,9 @@
    "match": [
     "rajiv gandhi centre for biotechnology"
    ],
-   "lat": 8.49204,
-   "lng": 76.96707,
-   "source": "OpenStreetMap (main campus, Jagathy)"
+   "lat": 8.4921,
+   "lng": 76.96698,
+   "source": "Checked by hand (organisers)"
   },
   {
    "name": "CSIR – CFTRI, Mysuru",
@@ -49,9 +49,9 @@
    "match": [
     "central university of karnataka"
    ],
-   "lat": 17.4348,
-   "lng": 76.673,
-   "source": "Wikidata Q5061960"
+   "lat": 17.43216,
+   "lng": 76.67365,
+   "source": "Checked by hand (organisers)"
   },
   {
    "name": "Central University of Kerala, Kasaragod",
@@ -66,9 +66,9 @@
    "match": [
     "mangalore university"
    ],
-   "lat": 12.81576,
-   "lng": 74.92408,
-   "source": "Wikidata Q3630937"
+   "lat": 12.8131,
+   "lng": 74.92583,
+   "source": "Checked by hand (organisers)"
   },
   {
    "name": "Kerala Agricultural University, Vellanikkara",
@@ -243,9 +243,9 @@
    "match": [
     "imhans"
    ],
-   "lat": 11.27913,
-   "lng": 75.84457,
-   "source": "Wikidata Q98113942"
+   "lat": 11.27945,
+   "lng": 75.84443,
+   "source": "Checked by hand (organisers)"
   },
   {
    "name": "Invesdwin GmbH, Germany",
