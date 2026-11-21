@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Science Slam Presenter Map
  * Description: A map of where the Kerala Science Slam presenters come from: one dot per presenter at their institution, coloured by slam, with Kerala's districts and Tamil Nadu. Shortcode [slam_presenter_map]. Uses the presenters and timetables of Science Slam Presenter Profiles.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Kerala Science Slam
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SPM_VERSION', '1.0.1' );
+define( 'SPM_VERSION', '1.0.2' );
 define( 'SPM_URL', plugin_dir_url( __FILE__ ) );
 define( 'SPM_DIR', plugin_dir_path( __FILE__ ) );
 

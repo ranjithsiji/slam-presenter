@@ -1,5 +1,5 @@
 {
- "_about": "Where each presenter institution is, for the presenters map (/map). A presenter belongs to the first place whose \"match\" text appears in their institution (case-insensitive). Coordinates from OpenStreetMap (Nominatim), checked by hand; \"approx\" means the town, not the campus.",
+ "_about": "Where each presenter institution is, for the presenters map (/map). A presenter belongs to the first place whose \"match\" text appears in their institution (case-insensitive). Coordinates from Wikidata (P625, the item named in \"source\") or OpenStreetMap, checked by hand; \"approx\" means the town, not the campus.",
  "places": [
   {
    "name": "Amrita Vishwa Vidyapeetham, Amritapuri",
@@ -14,8 +14,9 @@
    "match": [
     "rajiv gandhi centre for biotechnology"
    ],
-   "lat": 8.52558,
-   "lng": 76.90792
+   "lat": 8.49204,
+   "lng": 76.96707,
+   "source": "OpenStreetMap (main campus, Jagathy)"
   },
   {
    "name": "CSIR – CFTRI, Mysuru",
@@ -39,18 +40,18 @@
    "match": [
     "national institute of oceanography"
    ],
-   "lat": 9.9679,
-   "lng": 76.24444,
-   "approx": true
+   "lat": 9.98744,
+   "lng": 76.27258,
+   "source": "OpenStreetMap"
   },
   {
    "name": "Central University of Karnataka",
    "match": [
     "central university of karnataka"
    ],
-   "lat": 17.2409,
-   "lng": 76.76974,
-   "approx": true
+   "lat": 17.4348,
+   "lng": 76.673,
+   "source": "Wikidata Q5061960"
   },
   {
    "name": "Central University of Kerala, Kasaragod",
@@ -65,9 +66,9 @@
    "match": [
     "mangalore university"
    ],
-   "lat": 12.86982,
-   "lng": 74.84301,
-   "approx": true
+   "lat": 12.81576,
+   "lng": 74.92408,
+   "source": "Wikidata Q3630937"
   },
   {
    "name": "Kerala Agricultural University, Vellanikkara",
@@ -110,7 +111,7 @@
    ],
    "lat": 8.56151,
    "lng": 76.88283,
-   "approx": true
+   "source": "OpenStreetMap (Kariavattom campus)"
   },
   {
    "name": "Government College for Women, Thiruvananthapuram",
@@ -141,9 +142,9 @@
    "match": [
     "madappally"
    ],
-   "lat": 11.63689,
-   "lng": 75.56892,
-   "approx": true
+   "lat": 11.6484,
+   "lng": 75.56995,
+   "source": "OpenStreetMap"
   },
   {
    "name": "Government Engineering College, Kozhikode",
@@ -166,9 +167,9 @@
    "match": [
     "spices research"
    ],
-   "lat": 11.28774,
-   "lng": 75.8221,
-   "approx": true
+   "lat": 11.29395,
+   "lng": 75.82038,
+   "source": "Wikidata Q18125959"
   },
   {
    "name": "IIIT Kottayam",
@@ -192,9 +193,9 @@
    "match": [
     "space science and technology"
    ],
-   "lat": 8.62672,
-   "lng": 77.03072,
-   "approx": true
+   "lat": 8.62536,
+   "lng": 77.03401,
+   "source": "Wikidata Q1339553"
   },
   {
    "name": "IIT Hyderabad",
@@ -225,9 +226,9 @@
    "match": [
     "technology, palakkad"
    ],
-   "lat": 10.80028,
-   "lng": 76.75477,
-   "approx": true
+   "lat": 10.79389,
+   "lng": 76.82667,
+   "source": "Wikidata Q19512294"
   },
   {
    "name": "INCOIS, Hyderabad",
@@ -242,9 +243,9 @@
    "match": [
     "imhans"
    ],
-   "lat": 11.24506,
-   "lng": 75.77547,
-   "approx": true
+   "lat": 11.27913,
+   "lng": 75.84457,
+   "source": "Wikidata Q98113942"
   },
   {
    "name": "Invesdwin GmbH, Germany",
@@ -279,18 +280,18 @@
     "digital university kerala",
     "digital sciences"
    ],
-   "lat": 8.5929,
-   "lng": 76.85937,
-   "approx": true
+   "lat": 8.61639,
+   "lng": 76.85259,
+   "source": "OpenStreetMap"
   },
   {
    "name": "Kerala University of Fisheries and Ocean Studies",
    "match": [
     "fisheries and ocean studies"
    ],
-   "lat": 9.89664,
-   "lng": 76.32597,
-   "approx": true
+   "lat": 9.9105,
+   "lng": 76.31729,
+   "source": "OpenStreetMap"
   },
   {
    "name": "Little Flower College, Guruvayur",
@@ -361,9 +362,9 @@
    "match": [
     "psg institute"
    ],
-   "lat": 11.02778,
-   "lng": 76.99862,
-   "approx": true
+   "lat": 11.02464,
+   "lng": 77.00178,
+   "source": "Wikidata Q30262997"
   },
   {
    "name": "Payyanur College",
@@ -410,9 +411,9 @@
    "match": [
     "sree chitra"
    ],
-   "lat": 8.52251,
-   "lng": 76.93006,
-   "approx": true
+   "lat": 8.52167,
+   "lng": 76.9264,
+   "source": "Wikidata Q7585631"
   },
   {
    "name": "Sree Narayana College, Kollam",
@@ -427,9 +428,9 @@
    "match": [
     "neelakanta"
    ],
-   "lat": 10.80486,
-   "lng": 76.17802,
-   "approx": true
+   "lat": 10.809,
+   "lng": 76.199,
+   "source": "Wikidata Q16136326"
   },
   {
    "name": "St. John's College, Anchal",
@@ -460,9 +461,9 @@
    "match": [
     "st. stephen's"
    ],
-   "lat": 9.0927,
-   "lng": 76.8563,
-   "approx": true
+   "lat": 9.09146,
+   "lng": 76.8169,
+   "source": "Wikidata Q7591755"
   },
   {
    "name": "St. Teresa's College, Ernakulam",
@@ -493,9 +494,9 @@
    "match": [
     "swami anandatheertha"
    ],
-   "lat": 12.10322,
-   "lng": 75.23333,
-   "approx": true
+   "lat": 12.10482,
+   "lng": 75.23643,
+   "source": "Wikidata Q136803531"
   },
   {
    "name": "Tata Institute of Fundamental Research, Mumbai",
@@ -510,18 +511,18 @@
    "match": [
     "photonic sciences"
    ],
-   "lat": 41.2861,
-   "lng": 1.98242,
-   "approx": true
+   "lat": 41.27547,
+   "lng": 1.98962,
+   "source": "Wikidata Q3775506"
   },
   {
    "name": "UGC-DAE Consortium for Scientific Research, Indore",
    "match": [
     "ugc-dae"
    ],
-   "lat": 22.72036,
-   "lng": 75.8682,
-   "approx": true
+   "lat": 22.69268,
+   "lng": 75.87218,
+   "source": "Wikidata Q30266622"
   },
   {
    "name": "University College, Thiruvananthapuram",
