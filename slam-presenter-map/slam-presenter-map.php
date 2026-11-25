@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Science Slam Presenter Map
  * Description: A map of where the Kerala Science Slam presenters come from: one dot per presenter at their institution, coloured by slam, with Kerala's districts and Tamil Nadu. Shortcode [slam_presenter_map]. Uses the presenters and timetables of Science Slam Presenter Profiles.
- * Version: 1.0.2
+ * Version: 1.1.0
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: Kerala Science Slam
@@ -14,14 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SPM_VERSION', '1.0.2' );
+define( 'SPM_VERSION', '1.1.0' );
 define( 'SPM_URL', plugin_dir_url( __FILE__ ) );
 define( 'SPM_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * Presenters are the talks in each slam's published timetable (Presenter Profiles); a presenter goes to the first
  * place in data/presenter-places.json whose "match" text is in their institution. The data is cached for 10 minutes
- * and dropped whenever a presenter or a slam event is saved.
+ * and dropped whenever a presenter or a slam event is saved. Final events are left out (their presenters are already
+ * on the map under their regional slam); [slam_presenter_map finalists="yes"] shows only the presenters in each
+ * regional slam's published result (Presenter Profiles → Results), ie. the finalists.
  */
 final class SPM_Map {
 
@@ -39,6 +41,20 @@ final class SPM_Map {
 
 	public static function flush() {
 		delete_transient( self::CACHE );
+		delete_transient( self::CACHE . '_fin' );
+	}
+
+	private static function is_final( $term ) {
+		return 'final' === (string) get_term_meta( $term->term_id, 'ssp_event_type', true );
+	}
+
+	/** Presenter ids in the slam's published result (the finalists it sent to the final). */
+	private static function finalist_ids( $term ) {
+		if ( ! class_exists( 'SSP_Results' ) ) {
+			return array();
+		}
+		$r = SSP_Results::get( $term->term_id );
+		return 'publish' === $r['status'] ? array_map( 'intval', $r['ids'] ) : array();
 	}
 
 	private static function places() {
@@ -75,8 +91,9 @@ final class SPM_Map {
 		return get_posts( array( 'post_type' => 'slam_presenter', 'post_status' => 'publish', 'fields' => 'ids', 'numberposts' => -1, 'tax_query' => array( array( 'taxonomy' => 'slam_event', 'terms' => $term->term_id ) ) ) );
 	}
 
-	public static function data() {
-		$hit = get_transient( self::CACHE );
+	public static function data( $finalists = false ) {
+		$key = self::CACHE . ( $finalists ? '_fin' : '' );
+		$hit = get_transient( $key );
 		if ( is_array( $hit ) ) {
 			return $hit;
 		}
@@ -93,7 +110,10 @@ final class SPM_Map {
 			return (int) get_term_meta( $a->term_id, 'ssp_sort_order', true ) <=> (int) get_term_meta( $b->term_id, 'ssp_sort_order', true );
 		} );
 		foreach ( $terms as $term ) {
-			$ids = self::presenter_ids( $term );
+			if ( self::is_final( $term ) ) {
+				continue;
+			}
+			$ids = $finalists ? self::finalist_ids( $term ) : self::presenter_ids( $term );
 			if ( ! $ids ) {
 				continue;
 			}
@@ -136,13 +156,14 @@ final class SPM_Map {
 			return count( $b['people'] ) - count( $a['people'] ) ?: strcmp( $a['name'], $b['name'] );
 		} );
 		$data = array( 'slams' => $slams, 'places' => $out, 'unplaced' => $unplaced, 'total' => $total );
-		set_transient( self::CACHE, $data, 10 * MINUTE_IN_SECONDS );
+		set_transient( $key, $data, 10 * MINUTE_IN_SECONDS );
 		return $data;
 	}
 
 	public static function shortcode( $atts ) {
-		$atts = shortcode_atts( array( 'list' => 'yes' ), $atts, 'slam_presenter_map' );
-		$data = self::data();
+		$atts = shortcode_atts( array( 'list' => 'yes', 'finalists' => 'no' ), $atts, 'slam_presenter_map' );
+		$fin  = 'yes' === $atts['finalists'];
+		$data = self::data( $fin );
 		wp_enqueue_style( 'spm-leaflet', SPM_URL . 'assets/leaflet/leaflet.css', array(), '1.9.4' );
 		wp_enqueue_style( 'spm-map', SPM_URL . 'assets/map.css', array( 'spm-leaflet' ), SPM_VERSION );
 		wp_enqueue_script( 'spm-leaflet', SPM_URL . 'assets/leaflet/leaflet.js', array(), '1.9.4', true );
@@ -154,7 +175,7 @@ final class SPM_Map {
 		ob_start();
 		?>
 		<div class="spm">
-			<p class="spm-intro"><?php echo esc_html( sprintf( '%d presenters from %d institutions. One dot for each presenter, coloured by their slam; tap a dot for the talk.', $data['total'], count( $data['places'] ) ) ); ?></p>
+			<p class="spm-intro"><?php echo esc_html( sprintf( $fin ? '%d finalists from %d institutions. One dot for each finalist, coloured by the regional slam they won through; tap a dot for the talk.' : '%d presenters from %d institutions. One dot for each presenter, coloured by their slam; tap a dot for the talk.', $data['total'], count( $data['places'] ) ) ); ?></p>
 			<div class="spm-legend" role="group" aria-label="Show slams">
 				<?php foreach ( $data['slams'] as $s ) : ?>
 					<label class="spm-chip"><input type="checkbox" checked data-spm-slam="<?php echo esc_attr( $s['slug'] ); ?>"><span class="spm-dot" style="background:<?php echo esc_attr( $s['colour'] ); ?>"></span><?php echo esc_html( $s['name'] ); ?><?php if ( $s['date'] ) : ?> <span class="spm-muted">· <?php echo esc_html( $s['date'] ); ?></span><?php endif; ?></label>

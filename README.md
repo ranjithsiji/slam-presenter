@@ -5,7 +5,7 @@ WordPress plugin for scienceslam.in: presenter profiles, slam events (4 regional
 ## Repository layout
 
 - [`slam-presenter-profiles/`](slam-presenter-profiles/): the WordPress plugin (zip this folder to install it).
-- [`slam-presenter-map/`](slam-presenter-map/): a map of the presenters' institutions, shortcode `[slam_presenter_map]` (zip this folder to install it; uses the presenters and timetables of Presenter Profiles).
+- [`slam-presenter-map/`](slam-presenter-map/): a map of the presenters' institutions, shortcode `[slam_presenter_map]` (zip this folder to install it; uses the presenters and timetables of Presenter Profiles). Final events are skipped so finalists are not counted twice; `[slam_presenter_map finalists="yes"]` maps only the finalists (each regional slam's published result).
 - [`slam-presenter-profiles/tools/`](slam-presenter-profiles/tools/): WP-CLI helpers and the photo face-centering script.
 - [`slam-photo-frame/`](slam-photo-frame/): a separate plugin for "ഞാനും പങ്കെടുക്കുന്നു" campaign photo frames (see [Photo frames](#photo-frames)).
 - [`examples/sample-presenters.csv`](examples/sample-presenters.csv): a Google Form responses export in the format *Import / Export* expects (same column headers, made-up presenters).
@@ -40,6 +40,8 @@ Admin screens (Presenters, Presenter Table, Timetable, Photos, Import/Export, Sl
 
 *Science Slam → Results* lists each slam of the working edition. *Declare result* opens the slam: click **Select presenters…**, tick the presenters in the popup (this slam's presenters in talk order, or the whole edition), drag to order, set the heading and note, choose Draft or Published and save. Show it on a page with `[slam_results event="ernakulam"]` (`columns="3"` by default). Visitors see nothing until the result is published.
 
+For the final's page, `[slam_finalists]` gathers the published results of every regional slam in the edition (Settings → current edition) into one grouped display, with a jump bar per slam. Until a slam's result is published it shows `pending` placeholder cards ("to be announced" after that slam's date), so publishing the last result fills the page in with no page edit. The intro line under the heading is the final event's date and venue when the edition has one.
+
 ## Export
 
 Presenters can be downloaded as **Excel (.xlsx)** or **CSV**: *Import / Export → Export presenters*, or the *Export Excel* / *Export CSV* buttons on *All Presenters* and *Presenter Table* (they follow the slam filter; no filter = the whole working edition). A single slam is exported in timetable order. Columns: names, institution, slam, edition, talk no. and time slot, title, summary, abstract, bio, award, email, phone, links, photo and profile URLs, status. The file contains contact details, so share it with care.
@@ -53,6 +55,7 @@ Presenters can be downloaded as **Excel (.xlsx)** or **CSV**: *Import / Export �
 | `[slam_talks event="final"]` | Numbered table of talks (as on the 2025 profiles). Not shown on profiles; use it on an event page if wanted. |
 | `[slam_presenter id="123"]` | One profile card anywhere. |
 | `[slam_results event="ernakulam"]` | The slam's declared result (selected presenters). `columns="3"`. Hidden until published. |
+| `[slam_finalists]` | Everyone selected for the final, grouped by regional slam, from each slam's published result. A slam without a published result shows placeholder cards. `pending="5"`, `columns="4"`, `title`, `intro`, `nav="no"`, `edition="kss-2026"`. |
 
 `event` accepts the event slug or term ID.
 
