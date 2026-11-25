@@ -4,6 +4,7 @@
 .ssp-grid,
 .ssp-timetable,
 .ssp-results,
+.ssp-finalists,
 .ssp-talks {
 	--ssp-accent: var(--ast-global-color-0, #FD9800);
 	--ssp-accent-dark: var(--ast-global-color-1, #E98C00);
@@ -24,6 +25,7 @@
 .ssp-grid *,
 .ssp-timetable *,
 .ssp-results *,
+.ssp-finalists *,
 .ssp-talks * {
 	box-sizing: border-box;
 }
@@ -41,6 +43,7 @@ html body .ssp-grid a:not(.ssp-u),
 html body a.ssp-grid-card:not(.ssp-u),
 html body .ssp-timetable a:not(.ssp-u),
 html body .ssp-results a:not(.ssp-u),
+html body .ssp-finalists a:not(.ssp-u),
 html body .ssp-talks a:not(.ssp-u) {
 	text-decoration: none;
 }
@@ -1027,6 +1030,423 @@ html body .ssp-results-list a:hover strong {
 
 	.ssp-results-head {
 		padding: 1.25rem;
+	}
+}
+
+/* ---------- Finalists ([slam_finalists]) ---------- */
+
+.ssp-finalists {
+	--ssp-night: #0b1024;
+	--ssp-night-2: #1a1f45;
+	--ssp-glow: rgba(253, 152, 0, 0.35);
+	position: relative;
+	margin: 0 0 2.5rem;
+	padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1rem, 3.5vw, 3rem) clamp(2rem, 4vw, 3.5rem);
+	border-radius: calc(var(--ssp-radius) + 8px);
+	color: #cdd3e6;
+	background:
+		radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.7), transparent 60%),
+		radial-gradient(1px 1px at 28% 72%, rgba(255, 255, 255, 0.5), transparent 60%),
+		radial-gradient(1.5px 1.5px at 67% 12%, rgba(255, 255, 255, 0.6), transparent 60%),
+		radial-gradient(1px 1px at 84% 44%, rgba(255, 255, 255, 0.5), transparent 60%),
+		radial-gradient(1px 1px at 46% 38%, rgba(255, 255, 255, 0.4), transparent 60%),
+		radial-gradient(1.5px 1.5px at 92% 82%, rgba(255, 255, 255, 0.5), transparent 60%),
+		radial-gradient(60% 45% at 50% 0%, rgba(253, 152, 0, 0.22), transparent 70%),
+		radial-gradient(50% 40% at 100% 100%, rgba(120, 90, 255, 0.18), transparent 70%),
+		linear-gradient(180deg, var(--ssp-night-2), var(--ssp-night));
+	overflow: hidden;
+}
+
+.ssp-fin-head {
+	max-width: 860px;
+	margin: 0 auto clamp(1.75rem, 4vw, 3rem);
+	text-align: center;
+}
+
+.ssp-fin-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 0 0.9rem;
+	padding: 0.35rem 0.9rem;
+	border: 1px solid rgba(253, 152, 0, 0.45);
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	color: var(--ssp-accent);
+	background: rgba(253, 152, 0, 0.08);
+}
+
+.ssp-finalists .ssp-fin-title {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	font-size: clamp(2rem, 5.5vw, 3.6rem);
+	font-weight: 700;
+	line-height: 1.15;
+	color: #fff;
+	text-shadow: 0 0 40px var(--ssp-glow);
+}
+
+.ssp-fin-intro {
+	margin: 0.75rem 0 0;
+	font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+	color: #e6e9f5;
+}
+
+.ssp-finalists dl.ssp-fin-stats {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.75rem clamp(1.5rem, 5vw, 3.5rem);
+	margin: 1.75rem 0 0;
+}
+
+.ssp-fin-stats > div {
+	min-width: 6rem;
+}
+
+.ssp-finalists .ssp-fin-stats dt {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	font-size: clamp(2rem, 4.5vw, 2.8rem);
+	font-weight: 700;
+	line-height: 1;
+	color: var(--ssp-accent);
+	font-variant-numeric: tabular-nums;
+}
+
+.ssp-finalists .ssp-fin-stats dd {
+	margin: 0.35rem 0 0;
+	font-size: 0.85rem;
+	color: #aab2cc;
+}
+
+.ssp-fin-nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-top: 1.75rem;
+}
+
+html body .ssp-fin-nav a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.4rem 0.5rem 0.4rem 0.95rem;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-radius: 999px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #fff;
+	background: rgba(255, 255, 255, 0.05);
+	transition: background 0.2s, border-color 0.2s;
+}
+
+html body .ssp-fin-nav a:hover,
+html body .ssp-fin-nav a:focus-visible {
+	border-color: var(--ssp-accent);
+	background: rgba(253, 152, 0, 0.14);
+	color: #fff;
+}
+
+.ssp-fin-nav a span {
+	min-width: 1.75rem;
+	padding: 0.1rem 0.5rem;
+	border-radius: 999px;
+	font-size: 0.78rem;
+	text-align: center;
+	color: var(--ssp-night);
+	background: var(--ssp-accent);
+}
+
+.ssp-fin-nav a.is-pending span {
+	color: #fff;
+	background: transparent;
+	border: 1px dashed rgba(255, 255, 255, 0.45);
+}
+
+.ssp-fin-region {
+	max-width: 1180px;
+	margin: 0 auto;
+	scroll-margin-top: 6rem;
+}
+
+.ssp-fin-region + .ssp-fin-region {
+	margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.ssp-fin-region-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1rem;
+	margin-bottom: 1.1rem;
+	padding-bottom: 0.9rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ssp-fin-region-no {
+	font-family: var(--ssp-head-font);
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1;
+	color: transparent;
+	-webkit-text-stroke: 1px var(--ssp-accent);
+}
+
+.ssp-fin-region-text {
+	flex: 1 1 14rem;
+	min-width: 0;
+}
+
+.ssp-finalists .ssp-fin-region-text h3 {
+	margin: 0;
+	font-family: var(--ssp-head-font);
+	font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+	font-weight: 700;
+	line-height: 1.2;
+	color: #fff;
+}
+
+.ssp-fin-region-text p {
+	margin: 0.15rem 0 0;
+	font-size: 0.88rem;
+	color: #aab2cc;
+}
+
+html body .ssp-fin-region-text a {
+	color: inherit;
+	border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
+}
+
+html body .ssp-fin-region-text a:hover {
+	color: var(--ssp-accent);
+}
+
+.ssp-fin-region-count {
+	padding: 0.25rem 0.75rem;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: var(--ssp-accent);
+	background: rgba(253, 152, 0, 0.12);
+}
+
+.ssp-fin-region.is-pending .ssp-fin-region-count {
+	color: #e6e9f5;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.ssp-finalists .ssp-tt-draft-note {
+	margin: 0 0 1rem;
+}
+
+/* Flex rather than grid so a short last row (eg. 6 = 4 + 2) sits centred. */
+html body .ssp-finalists ul.ssp-fin-grid {
+	--ssp-gap: clamp(0.9rem, 2vw, 1.5rem);
+	--ssp-row: var(--ssp-cols, 4);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--ssp-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ssp-fin-card {
+	flex: 0 0 calc((100% - (var(--ssp-row) - 1) * var(--ssp-gap)) / var(--ssp-row));
+	margin: 0;
+	min-width: 0;
+}
+
+html body .ssp-fin-card > a,
+.ssp-fin-card.is-tba {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: var(--ssp-radius);
+	overflow: hidden;
+	color: inherit;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+	transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+html body .ssp-fin-card > a:hover,
+html body .ssp-fin-card > a:focus-visible {
+	transform: translateY(-4px);
+	border-color: rgba(253, 152, 0, 0.6);
+	box-shadow: 0 18px 40px -18px var(--ssp-glow), 0 0 0 1px rgba(253, 152, 0, 0.25);
+}
+
+.ssp-fin-photo {
+	position: relative;
+	display: block;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	background: var(--ssp-night-2);
+}
+
+.ssp-fin-photo::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 0;
+	height: 40%;
+	background: linear-gradient(180deg, transparent, rgba(11, 16, 36, 0.75));
+	pointer-events: none;
+}
+
+.ssp-fin-photo .ssp-photo {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	font-size: 2.5rem;
+	transition: transform 0.5s;
+}
+
+.ssp-fin-card > a:hover .ssp-fin-photo .ssp-photo {
+	transform: scale(1.05);
+}
+
+.ssp-fin-badge {
+	position: absolute;
+	left: 0.7rem;
+	bottom: 0.7rem;
+	z-index: 1;
+	padding: 0.2rem 0.6rem;
+	border-radius: 999px;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--ssp-night);
+	background: var(--ssp-accent);
+}
+
+.ssp-fin-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: 0.95rem 1rem 1.1rem;
+}
+
+.ssp-fin-body strong {
+	font-family: var(--ssp-head-font);
+	font-size: 1.08rem;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #fff;
+}
+
+.ssp-fin-card > a:hover .ssp-fin-body strong {
+	color: var(--ssp-accent);
+}
+
+.ssp-fin-body small {
+	display: block;
+	margin-top: 0.2rem;
+	font-size: 0.78rem;
+	line-height: 1.45;
+	color: #9aa3bf;
+}
+
+.ssp-fin-talk {
+	margin-top: auto;
+	padding-top: 0.8rem;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	color: var(--ssp-cream);
+}
+
+.ssp-fin-talk::before {
+	content: "";
+	display: block;
+	width: 2rem;
+	height: 2px;
+	margin-bottom: 0.55rem;
+	background: var(--ssp-accent);
+}
+
+/* Placeholder cards for a slam whose result is still to come. */
+.ssp-fin-card.is-tba {
+	border-style: dashed;
+	border-color: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.025);
+}
+
+.ssp-fin-card.is-tba .ssp-fin-photo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: radial-gradient(circle at 50% 45%, rgba(253, 152, 0, 0.16), transparent 62%);
+}
+
+.ssp-fin-card.is-tba .ssp-fin-photo::after {
+	display: none;
+}
+
+.ssp-fin-tba-mark {
+	font-family: var(--ssp-head-font);
+	font-size: clamp(3rem, 7vw, 4.5rem);
+	font-weight: 700;
+	line-height: 1;
+	color: var(--ssp-accent);
+	text-shadow: 0 0 30px var(--ssp-glow);
+	animation: ssp-fin-pulse 2.6s ease-in-out infinite;
+}
+
+.ssp-fin-card.is-tba:nth-child(2) .ssp-fin-tba-mark { animation-delay: 0.3s; }
+.ssp-fin-card.is-tba:nth-child(3) .ssp-fin-tba-mark { animation-delay: 0.6s; }
+.ssp-fin-card.is-tba:nth-child(4) .ssp-fin-tba-mark { animation-delay: 0.9s; }
+.ssp-fin-card.is-tba:nth-child(5) .ssp-fin-tba-mark { animation-delay: 1.2s; }
+
+.ssp-fin-card.is-tba .ssp-fin-body strong {
+	color: #e6e9f5;
+	font-weight: 500;
+}
+
+@keyframes ssp-fin-pulse {
+	0%, 100% { opacity: 0.45; transform: scale(0.94); }
+	50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ssp-fin-tba-mark { animation: none; opacity: 0.8; }
+	html body .ssp-fin-card > a,
+	.ssp-fin-photo .ssp-photo { transition: none; }
+}
+
+@media (max-width: 1024px) {
+	html body .ssp-finalists ul.ssp-fin-grid {
+		--ssp-row: min(var(--ssp-cols, 4), 3);
+	}
+}
+
+@media (max-width: 720px) {
+	html body .ssp-finalists ul.ssp-fin-grid {
+		--ssp-row: 2;
+	}
+
+	.ssp-fin-body {
+		padding: 0.75rem 0.8rem 0.9rem;
+	}
+
+	.ssp-fin-body strong {
+		font-size: 0.98rem;
+	}
+
+	.ssp-fin-talk {
+		font-size: 0.82rem;
+	}
+}
+
+@media (max-width: 380px) {
+	html body .ssp-finalists ul.ssp-fin-grid {
+		--ssp-row: 1;
 	}
 }
 
