@@ -82,6 +82,7 @@ $labels   = array(
 			<tr><td><code>[slam_presenters event="ernakulam"]</code></td><td><?php esc_html_e( 'Photo grid of presenters. Options: columns="4", order="timetable|name", show="title".', 'slam-presenter-profiles' ); ?></td></tr>
 			<tr><td><code>[slam_timetable event="ernakulam"]</code></td><td><?php esc_html_e( 'Full day timetable with links to profiles. Option: photos="no".', 'slam-presenter-profiles' ); ?></td></tr>
 			<tr><td><code>[slam_talks event="final"]</code></td><td><?php esc_html_e( 'Numbered table of talks and presenters (as on last year\'s profiles).', 'slam-presenter-profiles' ); ?></td></tr>
+			<tr><td><code>[slam_finalists]</code></td><td><?php esc_html_e( 'All finalists of the edition, grouped by regional slam, from each slam\'s published result. Slams without a result show placeholder cards. Options: pending="5", columns="4", title="…", intro="…", nav="no", edition="kss-2026".', 'slam-presenter-profiles' ); ?></td></tr>
 			<tr><td><code>[slam_presenter id="123"]</code></td><td><?php esc_html_e( 'One presenter\'s profile card, anywhere.', 'slam-presenter-profiles' ); ?></td></tr>
 		</table>
 	</div>
